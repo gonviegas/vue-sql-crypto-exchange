@@ -1,7 +1,7 @@
 <template>
   <div class="container auth">
     <div>
-      <form action="signin.php" method="post">
+      <form action="signup.php" method="post">
         <fieldset>
           <ul>
             <li>
@@ -13,20 +13,24 @@
               <label for="password">Password</label>
               <input type="password" name="password" />
             </li>
+
+            <li>
+              <label for="cpassword">Confirm Password</label>
+              <input type="password" name="cpassword" />
+            </li>
           </ul>
         </fieldset>
         <fieldset>
-          <input type="submit" value="Signin" />
+          <input type="submit" value="Signup" />
         </fieldset>
       </form>
-      <a href="signup.php">Signup</a> | <a href="reset.php">Reset password</a
-      ><br /><br />
+      
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AuthLogin"
+  name: "AuthSignUp"
 };
 </script>

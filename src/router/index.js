@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Auth from "../views/Auth.vue";
-// import SignUp from "../views/SignUp.vue";
 
 Vue.use(VueRouter);
 
@@ -18,32 +17,22 @@ const routes = [
     component: Auth,
     children: [
       {
-        path: "/signup",
+        path: "/auth/signup",
         name: "SignUp",
-        component: () => import("../components/AuthSignUp.vue")
+        component: () => import("../components/auth/AuthSignUp.vue")
       },
       {
-        path: "/login",
+        path: "/auth/login",
         name: "Login",
-        component: () => import("../components/AuthLogin.vue")
+        component: () => import("../components/auth/AuthLogin.vue")
+      },
+      {
+        path: "/auth/reset",
+        name: "Reset",
+        component: () => import("../components/auth/AuthPassReset.vue")
       }
     ]
   }
-  // {
-  //   path: "/news",
-  //   name: "News",
-  //   component: () => import("../views/News.vue")
-  // },
-  // {
-  //   path: "/login",
-  //   name: "Login",
-  //   component: () => import("../views/Login.vue")
-  // },
-  // {
-  //   path: "/news",
-  //   name: "SignUp",
-  //   component: () => import("../views/SignUp.vue")
-  // }
 ];
 
 const router = new VueRouter({

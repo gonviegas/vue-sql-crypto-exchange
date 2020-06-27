@@ -2,8 +2,8 @@
   <div id="nav-bar">
     <ul>
       <router-link to="/"><li>Home</li></router-link>
-      <router-link to="/login"><li>Login</li></router-link>
-      <router-link to="/signup"><li>Sign Up</li></router-link>
+      <router-link to="/auth/login"><li>Login</li></router-link>
+      <router-link to="/auth/signup"><li>Sign Up</li></router-link>
     </ul>
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
       cursor: pointer;
 
       &:hover {
-        color: #718fa900;
+        color: #009e0d;
       }
     }
   }
