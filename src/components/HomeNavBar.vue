@@ -2,7 +2,6 @@
   <div id="nav-bar">
     <ul>
       <router-link to="/"><li>Home</li></router-link>
-      <router-link to="/news"><li>News</li></router-link>
       <router-link to="/login"><li>Login</li></router-link>
       <router-link to="/signup"><li>Sign Up</li></router-link>
     </ul>
@@ -11,7 +10,7 @@
 
 <script>
 export default {
-  name: "NavBar"
+  name: "HomeNavBar"
 };
 </script>
 
@@ -32,7 +31,7 @@ export default {
       cursor: pointer;
 
       &:hover {
-        color: #7ca971;
+        color: #718fa900;
       }
     }
   }
