@@ -34,7 +34,7 @@ export default {
 }
 
 form {
-  margin-bottom: 32px;;
+  margin-bottom: 32px;
   text-align: left;
   width: 100%;
 
@@ -42,7 +42,7 @@ form {
     border-radius: 16px;
     padding: 32px;
     margin: 32px auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 500px;
   }
 
@@ -76,19 +76,19 @@ input,
 select,
 textarea {
   border-radius: 2px;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   padding: 8px;
   outline: none;
-  transition: border .2s ease-in-out, box-shadow .2s ease-in-out;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
   &:focus {
     border: 1px solid #18a4e0;
-    box-shadow: 0 0 10px rgba(#18a4e0, .25);
-    transition: border .2s ease-in-out, box-shadow .2s ease-in-out;
+    box-shadow: 0 0 10px rgba(#18a4e0, 0.25);
+    transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   }
 }
 
-input[type=submit] {
+input[type="submit"] {
   align-items: center;
   background-color: #18a4e0;
   border: 0;
