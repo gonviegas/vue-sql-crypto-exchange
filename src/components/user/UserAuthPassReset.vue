@@ -18,6 +18,6 @@
 
 <script>
 export default {
-  name: "AuthPassReset"
+  name: "UserAuthPassReset"
 };
 </script>

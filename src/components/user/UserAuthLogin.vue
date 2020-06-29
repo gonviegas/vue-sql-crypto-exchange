@@ -28,7 +28,7 @@
 import axios from "axios";
 
 export default {
-  name: "AuthLogin",
+  name: "UserAuthLogin",
   data() {
     return {
       Auth: {

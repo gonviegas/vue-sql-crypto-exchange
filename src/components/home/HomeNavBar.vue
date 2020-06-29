@@ -2,8 +2,9 @@
   <div id="nav-bar">
     <ul>
       <router-link to="/"><li>Home</li></router-link>
-      <router-link to="/auth/login"><li>Login</li></router-link>
-      <router-link to="/auth/signup"><li>Sign Up</li></router-link>
+      <router-link to="/user/login"><li>Login</li></router-link>
+      <router-link to="/user/signup"><li>Sign Up</li></router-link>
+      <router-link to="/admin/login"><li>Admin</li></router-link>
     </ul>
   </div>
 </template>

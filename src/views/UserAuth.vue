@@ -11,7 +11,7 @@
 import HomeNavBar from "@/components/home/HomeNavBar.vue";
 
 export default {
-  name: "Auth",
+  name: "UserAuth",
   components: {
     HomeNavBar
   }

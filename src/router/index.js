@@ -1,7 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Auth from "../views/Auth.vue";
+import UserAuth from "../views/UserAuth.vue";
+import AdminAuth from "../views/AdminAuth.vue";
+import AdminDashboard from "../views/AdminDashboard.vue";
+import UserDashboard from "../views/UserDashboard.vue";
 
 Vue.use(VueRouter);
 
@@ -12,24 +15,48 @@ const routes = [
     component: Home
   },
   {
-    path: "/auth",
-    name: "Auth",
-    component: Auth,
+    path: "/user",
+    name: "User",
+    redirect: "user/dashboard",
+    component: UserAuth,
     children: [
       {
-        path: "/auth/signup",
-        name: "SignUp",
-        component: () => import("../components/auth/AuthSignUp.vue")
+        path: "/user/signup",
+        name: "UserAuthSignUp",
+        component: () => import("../components/user/UserAuthSignUp.vue")
       },
       {
-        path: "/auth/login",
-        name: "Login",
-        component: () => import("../components/auth/AuthLogin.vue")
+        path: "/user/login",
+        name: "UserAuthLogin",
+        component: () => import("../components/user/UserAuthLogin.vue")
       },
       {
-        path: "/auth/reset",
-        name: "Reset",
-        component: () => import("../components/auth/AuthPassReset.vue")
+        path: "/user/reset",
+        name: "UserAuthPassReset",
+        component: () => import("../components/user/UserAuthPassReset.vue")
+      },
+      {
+        path: "/user/dashboard",
+        name: "UserDashboard",
+        component: UserDashboard
+      }
+    ]
+  },
+  {
+    path: "/admin",
+    name: "Admin",
+    redirect: "admin/dashboard",
+    component: AdminAuth,
+    children: [
+      {
+        path: "/admin/login",
+        name: "AdminAuthLogin",
+        component: () => import("../components/admin/AdminAuthLogin.vue")
+      },
+      {
+        path: "/admin/dashboard",
+        name: "AdminDashboard",
+        component: AdminDashboard
       }
     ]
   }
