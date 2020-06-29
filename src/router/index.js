@@ -23,17 +23,17 @@ const routes = [
       {
         path: "/user/signup",
         name: "UserAuthSignUp",
-        component: () => import("../components/user/UserAuthSignUp.vue")
+        component: () => import("../components/user/auth/UserAuthSignUp.vue")
       },
       {
         path: "/user/login",
         name: "UserAuthLogin",
-        component: () => import("../components/user/UserAuthLogin.vue")
+        component: () => import("../components/user/auth/UserAuthLogin.vue")
       },
       {
         path: "/user/reset",
         name: "UserAuthPassReset",
-        component: () => import("../components/user/UserAuthPassReset.vue")
+        component: () => import("../components/user/auth/UserAuthPassReset.vue")
       },
       {
         path: "/user/dashboard",
@@ -51,7 +51,7 @@ const routes = [
       {
         path: "/admin/login",
         name: "AdminAuthLogin",
-        component: () => import("../components/admin/AdminAuthLogin.vue")
+        component: () => import("../components/admin/auth/AdminAuthLogin.vue")
       },
       {
         path: "/admin/dashboard",

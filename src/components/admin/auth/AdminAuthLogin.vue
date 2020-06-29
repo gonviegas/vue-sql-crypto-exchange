@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper fadeInDown">
     <div id="formContent">
+      <h3>admin</h3>
       <form>
         <input
           type="text"
@@ -53,7 +54,6 @@ a {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
   background: #fff;
-  padding: 30px;
   width: 90%;
   max-width: 450px;
   position: relative;
@@ -74,13 +74,10 @@ a {
 
 /* TABS */
 
-h2.inactive {
-  color: #cccccc;
-}
-
-h2.active {
-  color: #0d0d0d;
-  border-bottom: 2px solid #5fbae9;
+h3 {
+  margin-top: 10px;
+  color: #0d0d0d98;
+  text-transform: capitalize;
 }
 
 /* FORM TYPOGRAPHY*/
@@ -91,17 +88,18 @@ input[type="reset"] {
   background-color: #56baed;
   border: none;
   color: white;
-  padding: 15px 80px;
+  padding: 15px 60px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
+  width: 50%;
   -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
-  margin: 5px 20px 40px 20px;
+  margin: 20px 110px 0px 110px;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
@@ -134,8 +132,8 @@ input[type="text"] {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 5px;
-  width: 85%;
+  margin: 10px;
+  width: 95%;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
