@@ -1,6 +1,5 @@
 <?php
-// header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Origin: THE_FRONTEND_DOMAIN");
+header("Access-Control-Allow-Origin: http://localhost:8080");
 require_once ('db.php');
 
 if (!empty($_POST)) {

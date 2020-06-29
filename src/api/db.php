@@ -2,11 +2,11 @@
 function conn() {
     $host = 'localhost';
 
-    // ******* PRODUCTION 
+    // ******* DEV 
     $db   = 'dummy';
     $user = 'usurp';
     $pass = 'usurp';
-    //         PRODUCTION *******
+    //         DEV *******
     
     // ******* DEPLOYMENT
     // $db   = 'gonvpt_dummy';

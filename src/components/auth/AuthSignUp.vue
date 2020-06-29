@@ -28,6 +28,9 @@
           <input type="submit" value="Signup" @click.prevent="userSignUp()" />
         </fieldset>
       </form>
+      <!-- <div id= msg> -->
+      <!-- <h3> {{ message }} </h3> -->
+      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -71,12 +74,12 @@ export default {
       axios({
         method: "post",
 
-        // ******* PRODUCTION 
-        url: "http://localhost/api/signup.php", 
-        //         PRODUCTION *******
-        
+        // ******* DEV
+        url: "http://localhost/api/signup.php",
+        //         DEV  *******
+
         // ******* DEPLOYMENT
-        // url: "api/signup.php", 
+        // url: "api/signup.php",
         //         DEPLOYMENT *******
 
         data: formData,
@@ -84,11 +87,12 @@ export default {
       })
         .then(function(response) {
           //handle success
+          // this.message = response;
           console.log(response);
-
         })
         .catch(function(response) {
           //handle error
+          // this.message = response;
           console.log(response);
         });
     }
