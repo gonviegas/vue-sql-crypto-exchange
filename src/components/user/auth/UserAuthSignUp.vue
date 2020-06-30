@@ -1,4 +1,3 @@
-
 <template>
   <div class="container auth">
     <div>
@@ -29,9 +28,9 @@
           <input type="submit" value="Signup" @click.prevent="userSignUp()" />
         </fieldset>
       </form>
-      <!-- <div id= msg> -->
-      <!-- <h3> {{ message }} </h3> -->
-      <!-- </div> -->
+      <div id="msg">
+        <h3>{{ message }}</h3>
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +42,7 @@ export default {
   name: "UserAuthSignUp",
   data() {
     return {
+      message: "",
       Auth: {
         email: "",
         password: "",
@@ -65,11 +65,11 @@ export default {
       formData.append("cpassword", this.Auth.cpassword);
 
       // ******  DEBUG START *******
-      var authUser = {};
-      formData.forEach(function(value, key) {
-        authUser[key] = value;
-      });
-      console.log(authUser);
+      // var authUser = {};
+      // formData.forEach(function(value, key) {
+      //   authUser[key] = value;
+      // });
+      // console.log(authUser);
       // ******  DEBUG END *******
 
       axios({
@@ -79,23 +79,21 @@ export default {
         url: "http://localhost/api/signup.php",
         //         DEV  *******
 
-        // ******* DEPLOYMENT
+        // ******* DEPLOY
         // url: "api/signup.php",
-        //         DEPLOYMENT *******
+        //         DEPLOY *******
 
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } }
       })
-        .then(function(response) {
-          //handle success
-          // this.message = response;
-          console.log(response);
-        })
-        .catch(function(response) {
-          //handle error
-          // this.message = response;
-          console.log(response);
-        });
+        .then(response => (this.message = response.data))
+        //handle success
+        // this.message = "response";
+
+        .catch(response => (this.message = response));
+      //handle error
+      // this.message = 1;
+      // console.log(response);
     }
   }
 };

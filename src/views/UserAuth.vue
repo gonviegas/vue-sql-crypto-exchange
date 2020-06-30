@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <HomeNavBar />
-    <h1>AUTH PAGE</h1>
+    <h1>USER PAGE</h1>
     <router-view />
   </div>
 </template>

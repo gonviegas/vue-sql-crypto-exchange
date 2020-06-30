@@ -1,4 +1,3 @@
-
 <template>
   <div class="container auth">
     <div>
@@ -20,7 +19,8 @@
           <input type="submit" value="Signin" @click.prevent="userLogin()" />
         </fieldset>
       </form>
-      <router-link to="/auth/reset"><li>Forgot your password?</li></router-link>
+      <p>{{ msg }}</p>
+      <router-link to="/user/reset"><li>Forgot your password?</li></router-link>
     </div>
   </div>
 </template>
@@ -32,56 +32,42 @@ export default {
   name: "UserAuthLogin",
   data() {
     return {
+      msg: null,
       Auth: {
-        email: "",
-        password: "",
-        cpassword: ""
+        email: null,
+        password: null
       }
     };
   },
   methods: {
-    resetForm: function() {
+    resetForm() {
       this.Auth.email = "";
       this.Auth.password = "";
     },
-    userLogin: function() {
-      console.log("METHOD: User Login");
-
-      let formData = new FormData();
-      formData.append("email", this.Auth.email);
-      formData.append("password", this.Auth.password);
-
-      // ******  DEBUG START *******
-      var authUser = {};
-      formData.forEach(function(value, key) {
-        authUser[key] = value;
-      });
-      console.log(authUser);
-      // ******  DEBUG END *******
+    userLogin() {
+      var data = new FormData();
+      data.append("email", this.Auth.email);
+      data.append("password", this.Auth.password);
 
       axios({
         method: "post",
-
         // ******* DEV
         url: "http://localhost/api/login.php",
         //         DEV  *******
-
         // ******* DEPLOYMENT
         // url: "api/signup.php",
         //         DEPLOYMENT *******
-
-        data: formData,
-        config: { headers: { "Content-Type": "multipart/form-data" } }
+        data: data
       })
-        .then(function(response) {
-          //handle success
-          // this.message = response;
-          console.log(response);
+        .then(res => {
+          if (res.data.err) {
+            this.msg = res.data.msg;
+          } else {
+            this.$router.push("dashboard");
+          }
         })
-        .catch(function(response) {
-          //handle error
-          // this.message = response;
-          console.log(response);
+        .catch(err => {
+          console.log("Network Error", err);
         });
     }
   }

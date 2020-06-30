@@ -4,8 +4,8 @@ function conn() {
 
     // ******* DEV 
     $db   = 'dummy';
-    $user = 'usurp';
-    $pass = 'usurp';
+    $user = 'root';
+    $pass = 'root';
     //         DEV *******
     
     // ******* DEPLOYMENT
@@ -17,9 +17,6 @@ function conn() {
     $charset = 'utf8mb4';
 
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-
-    $received_data = json_encode(file_get_contents("php://input"));
-
 
     $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

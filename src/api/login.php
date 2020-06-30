@@ -2,6 +2,8 @@
 header("Access-Control-Allow-Origin: http://localhost:8080");
 require_once ('db.php');
 
+$res = array('err' => false);
+
 if (!empty($_POST)) {
     $password   = $_POST['password'];
     $email      = $_POST['email'];
@@ -26,12 +28,17 @@ if (!empty($_POST)) {
                 $_SESSION['token'] = $r['token'];
                 $_SESSION['level'] = $r['level'];
 
-                echo 'User Logged In';
+                $res['msg']= "Login Successful";
             } else {
-                echo 'A autenticação falhou.';
+                $res['err']= true;
+                $res['msg']= "Invalid Email or Password";
             }
         }
     } else {
-        echo "All fields are required";
+        $res['err']= true;
+        $res['msg']= "All fields are required";
     }
+    // header("Content-type: application/json");
+    echo json_encode($res);
 }
+

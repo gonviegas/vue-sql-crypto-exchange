@@ -21,7 +21,7 @@ if (!empty($_POST)) {
         if ($stmt->execute([$email, $password, $level, $status, $token, $timestamp])) {
             $stmt = null;
 
-            echo "User signed up!";
+            echo "Sign Up successful";
 
             // $subject = 'Verify your account';
             // $message = 'Click the link to verify your account: <br><b><a href=https://www.app.com/verify.php?token='.$token.'&email='.$email.'>'.$token.'</a></b>';

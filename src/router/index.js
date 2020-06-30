@@ -2,9 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import UserAuth from "../views/UserAuth.vue";
-import AdminAuth from "../views/AdminAuth.vue";
-import AdminDashboard from "../views/AdminDashboard.vue";
 import UserDashboard from "../views/UserDashboard.vue";
+import Admin from "../views/Admin.vue";
+import AdminDashboard from "../views/AdminDashboard.vue";
 
 Vue.use(VueRouter);
 
@@ -17,46 +17,52 @@ const routes = [
   {
     path: "/user",
     name: "User",
-    redirect: "user/dashboard",
     component: UserAuth,
     children: [
       {
-        path: "/user/signup",
+        path: "signup",
         name: "UserAuthSignUp",
         component: () => import("../components/user/auth/UserAuthSignUp.vue")
       },
       {
-        path: "/user/login",
+        path: "login",
         name: "UserAuthLogin",
         component: () => import("../components/user/auth/UserAuthLogin.vue")
       },
       {
-        path: "/user/reset",
-        name: "UserAuthPassReset",
-        component: () => import("../components/user/auth/UserAuthPassReset.vue")
-      },
-      {
-        path: "/user/dashboard",
-        name: "UserDashboard",
-        component: UserDashboard
+        path: "reset",
+        name: "UserAuthReset",
+        component: () => import("../components/user/auth/UserAuthReset.vue")
       }
     ]
   },
   {
+    path: "/user/dashboard",
+    name: "UserDashboard",
+    component: UserDashboard
+  },
+
+  {
     path: "/admin",
     name: "Admin",
-    redirect: "admin/dashboard",
-    component: AdminAuth,
+    component: Admin,
     children: [
       {
-        path: "/admin/login",
+        path: "login",
         name: "AdminAuthLogin",
         component: () => import("../components/admin/auth/AdminAuthLogin.vue")
-      },
+      }
+    ]
+  },
+  {
+    path: "/admin/dashboard",
+    name: "AdminDashboard",
+    component: AdminDashboard,
+    children: [
       {
-        path: "/admin/dashboard",
-        name: "AdminDashboard",
-        component: AdminDashboard
+        path: "users",
+        name: "AdminUsersTable",
+        component: () => import("../components/admin/AdminUsersTable.vue")
       }
     ]
   }

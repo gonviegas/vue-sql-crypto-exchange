@@ -1,12 +1,18 @@
 <template>
   <div>
-    <p>Admin Dashboard</p>
+    <AdminNavBar />
+    <h3>AdminDashboard</h3>
+    <router-view />
   </div>
 </template>
 
 <script>
+import AdminNavBar from "@/components/admin/AdminNavBar.vue";
 export default {
-  name: "AdminDashboard"
+  name: "AdminDashboard",
+  components: {
+    AdminNavBar
+  }
 };
 </script>
 
