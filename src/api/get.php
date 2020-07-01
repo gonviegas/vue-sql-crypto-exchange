@@ -1,5 +1,4 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:8081");
 require_once ('db.php');
 
 $sql = "SELECT * FROM users ORDER BY id ASC";
@@ -12,7 +11,7 @@ $stmt->execute();
   $res = array();
 
 //Fetch into associative array
-  while ( $row = $stmt->fetchAll())  {
+  while ( $row = $stmt->fetch())  {
 	$res[]=$row;
   }
   $stmt = null;
