@@ -30,7 +30,6 @@
         {{ i }}
       </div>
     </div>
-    {{ rows }}
   </div>
 </template>
 
@@ -51,19 +50,14 @@ export default {
   methods: {
     getUsers() {
       axios({
-        method: "get",
-
-        // ******* DEV
-        url: "http://localhost/api/users-fetch-all.php"
-        //         DEV  *******
-
-        // ******* DEPLOY
-        // url: "api/users-fetch-all.php",
-        //         DEPLOY *******
+        method: "post",
+        url: "http://localhost/api/api.php",
+        data: {
+          action: "admin_fetchAll_users"
+        }
       })
         .then(res => {
           this.rows = res.data;
-          console.log(res.data);
         })
 
         .catch(err => {
@@ -109,8 +103,8 @@ export default {
       return Object.keys(this.rows[0]);
     }
   },
-  beforeMount(){
-    this.getUsers()
+  beforeMount() {
+    this.getUsers();
   }
 };
 </script>

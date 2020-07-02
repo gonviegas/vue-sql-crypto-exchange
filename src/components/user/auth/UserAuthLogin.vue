@@ -6,12 +6,12 @@
           <ul>
             <li>
               <label for="email">E-mail</label>
-              <input type="text" name="email" v-model="Auth.email" />
+              <input type="text" name="email" v-model="email" />
             </li>
 
             <li>
               <label for="password">Password</label>
-              <input type="password" name="password" v-model="Auth.password" />
+              <input type="password" name="password" v-model="password" />
             </li>
           </ul>
         </fieldset>
@@ -32,44 +32,40 @@ export default {
   name: "UserAuthLogin",
   data() {
     return {
-      msg: null,
-      Auth: {
-        email: "",
-        password: ""
-      }
+      msg: ""
     };
   },
   methods: {
     resetForm() {
-      this.Auth.email = "";
-      this.Auth.password = "";
+      this.email = "";
+      this.password = "";
     },
     userLogin() {
-      var data = new FormData();
-      data.append("email", this.Auth.email);
-      data.append("password", this.Auth.password);
-
       axios({
         method: "post",
-        // ******* DEV
-        url: "http://localhost/api/login.php",
-        //         DEV  *******
-        // ******* DEPLOYMENT
-        // url: "api/signup.php",
-        //         DEPLOYMENT *******
-        data: data
+        url: "http://localhost/api/api.php",
+        data: {
+          email: this.email,
+          password: this.password,
+          action: "user_login"
+        }
       })
         .then(res => {
           if (res.data.err) {
             this.msg = res.data.msg;
+            console.log(res.data.msg);
           } else {
             this.$router.push("dashboard");
+            console.log(res.data.msg);
           }
         })
         .catch(err => {
           console.log("Network Error", err);
         });
     }
+  },
+  beforeMount() {
+    this.resetForm();
   }
 };
 </script>
