@@ -34,8 +34,8 @@ export default {
     return {
       msg: null,
       Auth: {
-        email: null,
-        password: null
+        email: "",
+        password: ""
       }
     };
   },

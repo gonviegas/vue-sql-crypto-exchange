@@ -3,6 +3,9 @@
     <ul>
       <router-link to="/admin/dashboard"><li>Dashboard</li></router-link>
       <router-link to="/admin/dashboard/users"><li>Users</li></router-link>
+      <router-link to="/admin/dashboard/crypto-api"
+        ><li>Crypto-Api</li></router-link
+      >
     </ul>
   </div>
 </template>

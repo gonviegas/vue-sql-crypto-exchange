@@ -1,5 +1,9 @@
 <template>
   <div>
+    <fieldset>
+      <input type="submit" value="Get Crypto" @click.prevent="getUsers()" />
+    </fieldset>
+
     <table>
       <thead>
         <tr>
@@ -30,7 +34,8 @@
         {{ i }}
       </div>
     </div>
-    {{ rows }}
+    {{ data }}
+    {{ arr }}
   </div>
 </template>
 
@@ -38,32 +43,33 @@
 import axios from "axios";
 
 export default {
-  name: "AdminUsersTable",
+  name: "CryptoApi",
   data() {
     return {
       currentPage: 1,
       elementsPerPage: 15,
       ascending: false,
       sortColumn: "",
-      rows: ""
+      rows: "",
+      data: null,
+      arr: Array
     };
   },
   methods: {
     getUsers() {
       axios({
         method: "get",
-
-        // ******* DEV
-        url: "http://localhost/api/users-fetch-all.php"
-        //         DEV  *******
-
-        // ******* DEPLOY
-        // url: "api/users-fetch-all.php",
-        //         DEPLOY *******
+        url:
+          "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,XRP,XLM,DGB&tsyms=USD,EUR"
       })
         .then(res => {
-          this.rows = res.data;
+          this.data = res.data;
           console.log(res.data);
+          this.arr = this.data;
+          console.log(this.arr);
+          this.rows = this.arr;
+          // this.rows = JSON.stringify(res.data);
+          // this.rows = this.data;
         })
 
         .catch(err => {
@@ -108,9 +114,6 @@ export default {
       }
       return Object.keys(this.rows[0]);
     }
-  },
-  beforeMount(){
-    this.getUsers()
   }
 };
 </script>

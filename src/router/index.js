@@ -63,6 +63,11 @@ const routes = [
         path: "users",
         name: "AdminUsersTable",
         component: () => import("../components/admin/AdminUsersTable.vue")
+      },
+      {
+        path: "crypto-api",
+        name: "CryptoApi",
+        component: () => import("../components/CryptoApi.vue")
       }
     ]
   }

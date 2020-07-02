@@ -15,7 +15,7 @@ if (!empty($_POST)) {
         $token      = sha1(bin2hex(date('U')));
         $timestamp  = date('U');
 
-        $sql = "INSERT INTO users (email, password, level, status, token, timestamp) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT IGNORE INTO users (email, password, level, status, token, timestamp) VALUES (?, ?, ?, ?, ?, ?)";
 
         $stmt = conn()->prepare($sql);
         if ($stmt->execute([$email, $password, $level, $status, $token, $timestamp])) {

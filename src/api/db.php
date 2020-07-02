@@ -1,13 +1,14 @@
 <?php
 header("Access-Control-Allow-Origin: http://localhost:8080");
 
+
 function conn() {
     $host = 'localhost';
 
     // ******* DEV 
     $db   = 'dummy';
-    $user = 'root';
-    $pass = 'root';
+    $user = 'usurp';
+    $pass = 'usurp';
     //         DEV *******
     
     // ******* DEPLOYMENT

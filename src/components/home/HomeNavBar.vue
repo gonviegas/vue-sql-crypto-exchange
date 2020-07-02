@@ -5,6 +5,7 @@
       <router-link to="/user/login"><li>Login</li></router-link>
       <router-link to="/user/signup"><li>Sign Up</li></router-link>
       <router-link to="/admin/login"><li>Admin</li></router-link>
+      <router-link to="/admin/dashboard"><li>Admin Dashboard</li></router-link>
     </ul>
   </div>
 </template>
