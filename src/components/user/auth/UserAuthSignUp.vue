@@ -1,26 +1,22 @@
 <template>
   <div class="container auth">
     <div>
-      <form action="signup.php" method="post">
+      <form action="signup" method="post">
         <fieldset>
           <ul>
             <li>
               <label for="email">E-mail</label>
-              <input type="text" name="email" v-model="Auth.email" />
+              <input type="text" name="email" v-model="email" />
             </li>
 
             <li>
               <label for="password">Password</label>
-              <input type="password" name="password" v-model="Auth.password" />
+              <input type="password" name="password" v-model="password" />
             </li>
 
             <li>
               <label for="cpassword">Confirm Password</label>
-              <input
-                type="password"
-                name="cpassword"
-                v-model="Auth.cpassword"
-              />
+              <input type="password" name="cpassword" v-model="cpassword" />
             </li>
           </ul>
         </fieldset>
@@ -29,7 +25,7 @@
         </fieldset>
       </form>
       <div id="msg">
-        <h3>{{ message }}</h3>
+        <h3>{{ msg }}</h3>
       </div>
     </div>
   </div>
@@ -42,58 +38,26 @@ export default {
   name: "UserAuthSignUp",
   data() {
     return {
-      message: "",
-      Auth: {
-        email: "",
-        password: "",
-        cpassword: ""
-      }
+      msg: ""
     };
   },
   methods: {
-    resetForm: function() {
-      this.Auth.email = "";
-      this.Auth.password = "";
-      this.Auth.cpassword = "";
-    },
-    userSignUp: function() {
-      console.log("METHOD: User SignUp");
-
-      let formData = new FormData();
-      formData.append("email", this.Auth.email);
-      formData.append("password", this.Auth.password);
-      formData.append("cpassword", this.Auth.cpassword);
-
-      // ******  DEBUG START *******
-      // var authUser = {};
-      // formData.forEach(function(value, key) {
-      //   authUser[key] = value;
-      // });
-      // console.log(authUser);
-      // ******  DEBUG END *******
-
+    userSignUp() {
       axios({
         method: "post",
-
-        // ******* DEV
-        url: "http://localhost/api/signup.php",
-        //         DEV  *******
-
-        // ******* DEPLOY
-        // url: "api/signup.php",
-        //         DEPLOY *******
-
-        data: formData,
-        config: { headers: { "Content-Type": "multipart/form-data" } }
+        url: "http://localhost/api/api.php",
+        data: {
+          email: this.email,
+          password: this.password,
+          cpassword: this.cpassword,
+          action: "user_signup"
+        }
       })
-        .then(response => (this.message = response.data))
-        //handle success
-        // this.message = "response";
+        .then(res => (this.msg = res.data.msg))
 
-        .catch(response => (this.message = response));
-      //handle error
-      // this.message = 1;
-      // console.log(response);
+        .catch(err => {
+          this.msg = err;
+        });
     }
   }
 };

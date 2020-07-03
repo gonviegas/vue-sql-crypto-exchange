@@ -1,7 +1,7 @@
 <template>
   <div class="container auth">
     <div>
-      <form action="login.php" method="post">
+      <form action="login" method="post">
         <fieldset>
           <ul>
             <li>
@@ -51,21 +51,16 @@ export default {
         }
       })
         .then(res => {
-          if (res.data.err) {
+          if (res.data.err == true) {
             this.msg = res.data.msg;
-            console.log(res.data.msg);
           } else {
             this.$router.push("dashboard");
-            console.log(res.data.msg);
           }
         })
         .catch(err => {
-          console.log("Network Error", err);
+          this.msg = err;
         });
     }
-  },
-  beforeMount() {
-    this.resetForm();
   }
 };
 </script>

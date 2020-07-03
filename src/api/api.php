@@ -6,7 +6,7 @@ function conn() {
     $host = 'localhost';
 
     // ******* DEV 
-    $db   = 'dummy';
+    $db   = 'crypto-exchange';
     $user = 'root';
     $pass = 'root';
     //         DEV *******
@@ -38,10 +38,10 @@ function conn() {
 $received_data = json_decode(file_get_contents('php://input'));
 $data = array();
 
-//ADMIN - FETCH ALL USERS
+//ADMIN LVL 0+1 - FETCH ALL USERS
 if ($received_data->action == "admin_fetchAll_users") {
     
-    $sql = "SELECT * FROM users ORDER BY id ASC";
+    $sql = "SELECT * FROM customer ORDER BY id ASC";
     
     $stmt = conn()->prepare($sql);
     $stmt->execute();
@@ -55,23 +55,66 @@ if ($received_data->action == "admin_fetchAll_users") {
     echo json_encode($data);
 }
 
+//USER - SIGNUP
+if ($received_data->action == "user_signup") {
+
+    $email      = $received_data->email;
+    $password   = $received_data->password;
+    $cpassword  = $received_data->cpassword;
+
+    if (!empty($password) && $password === $cpassword && !empty($email)) {
+        $password   = password_hash($received_data->cpassword, PASSWORD_BCRYPT);
+        $status     = 'unverified';
+        $token      = sha1(bin2hex(date('U')));
+        $timestamp  = date('U');
+
+        $sql = "INSERT IGNORE INTO customer (email, first_name, last_name, status, password, token, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = conn()->prepare($sql);
+        
+        if ($stmt->execute([$email, $first_name, $last_name, $status, $password, $token, $timestamp])) {
+            $stmt = null;
+
+            $data['err']= true;
+            $data['msg']= "Sign Up successful.";
+            
+
+            // $subject = 'Verify your account';
+            // $message = 'Click the link to verify your account: <br><b><a href=https://www.app.com/verify.php?token='.$token.'&email='.$email.'>'.$token.'</a></b>';
+            // $output = '<p>A confirmation message has been sent to '.$email.'</p>';
+
+            // email($email, $subject, $message, $output);
+        }
+    } 
+    elseif ($password !== $cpassword) {
+        $data['err']= true;
+        $data['msg']= "Passwords do not match";
+    } 
+    else {
+        $data['err']= true;
+        $data['msg']= "All fields are required";
+    }
+    echo json_encode($data);
+}
+
 //USER - LOGIN
 if ($received_data->action == "user_login") {
     
-    $password = $received_data->password;
     $email = $received_data->email;
+    $password = $received_data->password;
+    $status = 'active';
     
     if (!empty($password) && !empty($email)) {
-        $sql = "SELECT email, password, token, level FROM users WHERE email = ? AND level > ? AND status > ? LIMIT 1";
+        $sql = "SELECT email, password, token, status FROM customer WHERE email = ? AND status = ?";
 
         $stmt = conn()->prepare($sql);
-        if ($stmt->execute([$email, 0, 0])) {
-            $n = $stmt->rowCount();
+        if ($stmt->execute([$email, $status])) {
+            // $n = $stmt->rowCount();
             $r = $stmt->fetch();
 
             $stmt = null;
             
-            if ($n === 1 && password_verify($password, $r['password'])) {
+            if ($status === $r['status'] && password_verify($password, $r['password'])) {
                 session_start();
                 //session_regenerate_id();
 
@@ -79,16 +122,17 @@ if ($received_data->action == "user_login") {
 
                 $_SESSION['email'] = $r['email'];
                 $_SESSION['token'] = $r['token'];
-                $_SESSION['level'] = $r['level'];
-
+                
+                $data['err']= false;
                 $data['msg']= "Login Successful";
-            
-            } else {
+            } 
+            else {
                 $data['err']= true;
                 $data['msg']= "Invalid Email or Password";
             }
-        }
-    } else {
+        } 
+    } 
+    else {
         $data['err']= true;
         $data['msg']= "All fields are required";
     }
