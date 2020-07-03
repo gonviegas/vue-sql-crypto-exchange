@@ -6,17 +6,32 @@
           <ul>
             <li>
               <label for="email">E-mail</label>
-              <input type="text" name="email" v-model="email" />
+              <input
+                type="email"
+                placeholder="example@something.com"
+                name="email"
+                v-model="email"
+              />
             </li>
 
             <li>
               <label for="password">Password</label>
-              <input type="password" name="password" v-model="password" />
+              <input
+                type="password"
+                placeholder="**********"
+                name="password"
+                v-model="password"
+              />
             </li>
 
             <li>
               <label for="cpassword">Confirm Password</label>
-              <input type="password" name="cpassword" v-model="cpassword" />
+              <input
+                type="password"
+                placeholder="**********"
+                name="cpassword"
+                v-model="cpassword"
+              />
             </li>
           </ul>
         </fieldset>
@@ -25,7 +40,7 @@
         </fieldset>
       </form>
       <div id="msg">
-        <h3>{{ msg }}</h3>
+        <p>{{ msg }}</p>
       </div>
     </div>
   </div>
@@ -38,10 +53,18 @@ export default {
   name: "UserAuthSignUp",
   data() {
     return {
-      msg: ""
+      msg: "",
+      email: "",
+      password: "",
+      cpassword: ""
     };
   },
   methods: {
+    resetForm() {
+      this.email = "";
+      this.password = "";
+      this.cpassword = "";
+    },
     userSignUp() {
       axios({
         method: "post",
@@ -53,8 +76,10 @@ export default {
           action: "user_signup"
         }
       })
-        .then(res => (this.msg = res.data.msg))
-
+        .then(res => {
+          this.resetForm();
+          this.msg = res.data.msg;
+        })
         .catch(err => {
           this.msg = err;
         });

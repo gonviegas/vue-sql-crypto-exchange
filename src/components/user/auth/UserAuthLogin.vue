@@ -32,7 +32,9 @@ export default {
   name: "UserAuthLogin",
   data() {
     return {
-      msg: ""
+      msg: "",
+      email: "",
+      password: ""
     };
   },
   methods: {
@@ -51,7 +53,8 @@ export default {
         }
       })
         .then(res => {
-          if (res.data.err == true) {
+          if (res.data.err) {
+            this.resetForm();
             this.msg = res.data.msg;
           } else {
             this.$router.push("dashboard");

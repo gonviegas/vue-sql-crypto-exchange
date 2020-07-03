@@ -57,33 +57,56 @@ if ($received_data->action == "admin_fetchAll_users") {
 
 //USER - SIGNUP
 if ($received_data->action == "user_signup") {
-
     $email      = $received_data->email;
     $password   = $received_data->password;
     $cpassword  = $received_data->cpassword;
 
+    
     if (!empty($password) && $password === $cpassword && !empty($email)) {
-        $password   = password_hash($received_data->cpassword, PASSWORD_BCRYPT);
-        $status     = 'unverified';
-        $token      = sha1(bin2hex(date('U')));
-        $timestamp  = date('U');
-
-        $sql = "INSERT IGNORE INTO customer (email, first_name, last_name, status, password, token, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        $stmt = conn()->prepare($sql);
         
-        if ($stmt->execute([$email, $first_name, $last_name, $status, $password, $token, $timestamp])) {
-            $stmt = null;
-
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $data['err']= true;
-            $data['msg']= "Sign Up successful.";
-            
+            $data['msg']= "Email format is invalid.";
+        }
 
-            // $subject = 'Verify your account';
-            // $message = 'Click the link to verify your account: <br><b><a href=https://www.app.com/verify.php?token='.$token.'&email='.$email.'>'.$token.'</a></b>';
-            // $output = '<p>A confirmation message has been sent to '.$email.'</p>';
+        else {
+            $sql = "SELECT email FROM customer";
 
-            // email($email, $subject, $message, $output);
+            $stmt = conn()->prepare($sql);
+            $stmt->execute(); 
+            $r = $stmt->fetch();
+
+            $stmt = null; 
+
+            if ($email == $r['email']) {
+                $data['err']= true;
+                $data['msg']= "Account already exists.";
+                
+            } else {
+                
+                $password   = password_hash($received_data->cpassword, PASSWORD_BCRYPT);
+                $status     = 'unverified';
+                $token      = sha1(bin2hex(date('U')));
+                $timestamp  = date('U');
+
+                $sql = "INSERT IGNORE INTO customer (email, first_name, last_name, status, password, token, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+                $stmt = conn()->prepare($sql);
+                
+                if ($stmt->execute([$email, $first_name, $last_name, $status, $password, $token, $timestamp])) {
+                    $stmt = null;
+
+                    $data['err']= true;
+                    $data['msg']= "Sign Up successful. Please follow the link in your email to verify your account";
+                    
+
+                    // $subject = 'Verify your account';
+                    // $message = 'Click the link to verify your account: <br><b><a href=https://www.app.com/verify.php?token='.$token.'&email='.$email.'>'.$token.'</a></b>';
+                    // $output = '<p>A confirmation message has been sent to '.$email.'</p>';
+
+                    // email($email, $subject, $message, $output);
+                }
+            } 
         }
     } 
     elseif ($password !== $cpassword) {
@@ -102,29 +125,42 @@ if ($received_data->action == "user_login") {
     
     $email = $received_data->email;
     $password = $received_data->password;
-    $status = 'active';
     
     if (!empty($password) && !empty($email)) {
-        $sql = "SELECT email, password, token, status FROM customer WHERE email = ? AND status = ?";
+        $sql = "SELECT email, password, token, status FROM customer WHERE email = ?";
 
         $stmt = conn()->prepare($sql);
-        if ($stmt->execute([$email, $status])) {
-            // $n = $stmt->rowCount();
+        if ($stmt->execute([$email])) {
+            $n = $stmt->rowCount();
             $r = $stmt->fetch();
 
-            $stmt = null;
-            
-            if ($status === $r['status'] && password_verify($password, $r['password'])) {
-                session_start();
-                //session_regenerate_id();
+            $stmt = null; 
 
-                $_SESSION['loggedin'] = true;
+            if ($n === 1 && password_verify($password, $r['password'])) {
+                if ('active' == $r['status']) {
+                    session_start();
+                    //session_regenerate_id();
 
-                $_SESSION['email'] = $r['email'];
-                $_SESSION['token'] = $r['token'];
-                
-                $data['err']= false;
-                $data['msg']= "Login Successful";
+                    $_SESSION['loggedin'] = true;
+
+                    $_SESSION['email'] = $r['email'];
+                    $_SESSION['token'] = $r['token'];
+                    
+                    $data['err']= false;
+                    $data['msg']= "Login Successful";
+                } 
+                else if('unverified' == $r['status']) {
+                    $data['err']= true;
+                    $data['msg']= "Account unverified. Please check your email to verify your account.";
+                }
+                else if('blocked' == $r['status']) {
+                    $data['err']= true;
+                    $data['msg']= "Account blocked. Please contact support for more info.";
+                }
+                else if('suspended' == $r['status'] || 'active' !== $r['status'] || 'unverified' !== $r['status'] || 'blocked' !== $r['status']) {
+                    $data['err']= true;
+                    $data['msg']= "Account suspended. Please contact support for more info.";
+                }
             } 
             else {
                 $data['err']= true;
@@ -136,6 +172,6 @@ if ($received_data->action == "user_login") {
         $data['err']= true;
         $data['msg']= "All fields are required";
     }
-    
+
     echo json_encode($data);
 }
