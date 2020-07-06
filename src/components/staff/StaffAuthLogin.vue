@@ -1,14 +1,14 @@
 <template>
   <div class="wrapper fadeInDown">
+    <router-link class="" to="/">Back</router-link>
     <div id="formContent">
-      <h3>admin</h3>
       <form>
         <input
           type="text"
           id="login"
           class="fadeIn second"
           name="login"
-          placeholder="login"
+          placeholder="username"
         />
         <input
           type="text"
@@ -27,8 +27,49 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-  name: "AdminAuthLogin"
+  name: "StaffAuthLogin",
+  data() {
+    return {
+      msg: "",
+      username: "",
+      password: ""
+    };
+  },
+  methods: {
+    resetForm() {
+      this.email = "";
+      this.password = "";
+    },
+    userLogin() {
+      axios({
+        method: "post",
+        url: "http://localhost/api/api.php",
+        data: {
+          email: this.email,
+          password: this.password,
+          action: "user_login"
+        }
+      })
+        .then(res => {
+          if (res.data.err) {
+            this.resetForm();
+            this.msg = res.data.msg;
+          } else {
+            if (res.data == 0) {
+              this.$router.push("front/dashboard");
+            } else if (res.data == 1) {
+              this.$router.push("admin/dashboard");
+            }
+          }
+        })
+        .catch(err => {
+          this.msg = err;
+        });
+    }
+  }
 };
 </script>
 

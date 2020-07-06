@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <HomeNavBar />
-    <p>USER Auth</p>
     <router-view />
   </div>
 </template>

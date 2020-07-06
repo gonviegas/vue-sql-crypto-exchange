@@ -1,16 +1,16 @@
 <template>
   <div>
-    <AdminNavbar />
+    <FrontNavbar />
     <router-view />
   </div>
 </template>
 
 <script>
-import AdminNavbar from "@/components/staff/backoffice/AdminNavbar.vue";
+import FrontNavbar from "@/components/staff/frontoffice/FrontNavbar.vue";
 export default {
-  name: "AdminDashboard",
+  name: "FrontDashboard",
   components: {
-    AdminNavbar
+    FrontNavbar
   }
 };
 </script>

@@ -2,9 +2,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import UserAuth from "../views/UserAuth.vue";
-import UserDashboard from "../views/UserDashboard.vue";
-import Admin from "../views/Admin.vue";
+import StaffAuth from "../views/StaffAuth.vue";
 import AdminDashboard from "../views/AdminDashboard.vue";
+import UserDashboard from "../views/UserDashboard.vue";
+import FrontDashboard from "../views/FrontDashboard.vue";
 
 Vue.use(VueRouter);
 
@@ -77,15 +78,15 @@ const routes = [
   },
 
   {
-    path: "/admin",
-    name: "Admin",
-    redirect: "/admin/login",
-    component: Admin,
+    path: "/staff",
+    name: "staff",
+    redirect: "/staff/login",
+    component: StaffAuth,
     children: [
       {
         path: "login",
-        name: "AdminAuthLogin",
-        component: () => import("../components/admin/AdminAuthLogin.vue")
+        name: "StaffAuthLogin",
+        component: () => import("../components/staff/StaffAuthLogin.vue")
       }
     ]
   },
@@ -97,32 +98,73 @@ const routes = [
       {
         path: "/admin/customers",
         name: "AdminCustomers",
-        component: () => import("../components/admin/AdminCustomers.vue")
+        component: () =>
+          import("../components/staff/backoffice/AdminCustomers.vue")
       },
       {
         path: "/admin/wallets",
         name: "AdminWallets",
-        component: () => import("../components/admin/AdminWallets.vue")
+        component: () =>
+          import("../components/staff/backoffice/AdminWallets.vue")
       },
       {
         path: "/admin/news",
         name: "AdminNews",
-        component: () => import("../components/admin/AdminNews.vue")
+        component: () => import("../components/staff/backoffice/AdminNews.vue")
       },
       {
         path: "/admin/staff",
         name: "AdminStaff",
-        component: () => import("../components/admin/AdminStaff.vue")
+        component: () => import("../components/staff/backoffice/AdminStaff.vue")
       },
       {
         path: "/admin/store-wallet",
         name: "AdminStoreWallet",
-        component: () => import("../components/admin/AdminStoreWallet.vue")
+        component: () =>
+          import("../components/staff/backoffice/AdminStoreWallet.vue")
       },
       {
         path: "/admin/transfers",
         name: "AdminTransfers",
-        component: () => import("../components/admin/AdminTransfers.vue")
+        component: () =>
+          import("../components/staff/backoffice/AdminTransfers.vue")
+      }
+    ]
+  },
+  {
+    path: "/front/dashboard",
+    name: "FrontDashboard",
+    component: FrontDashboard,
+    children: [
+      {
+        path: "/front/customers",
+        name: "FrontCustomers",
+        component: () =>
+          import("../components/staff/frontoffice/FrontCustomers.vue")
+      },
+      {
+        path: "/front/wallets",
+        name: "FrontWallets",
+        component: () =>
+          import("../components/staff/frontoffice/FrontWallets.vue")
+      },
+      {
+        path: "/front/staff",
+        name: "FrontStaff",
+        component: () =>
+          import("../components/staff/frontoffice/FrontStaff.vue")
+      },
+      {
+        path: "/front/store-wallet",
+        name: "FrontStoreWallet",
+        component: () =>
+          import("../components/staff/frontoffice/FrontStoreWallet.vue")
+      },
+      {
+        path: "/front/transfers",
+        name: "FrontTransfers",
+        component: () =>
+          import("../components/staff/frontoffice/FrontTransfers.vue")
       }
     ]
   }

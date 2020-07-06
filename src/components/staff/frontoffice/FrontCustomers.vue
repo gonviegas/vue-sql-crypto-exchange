@@ -37,7 +37,7 @@
 import axios from "axios";
 
 export default {
-  name: "AdminUsersTable",
+  name: "FrontCustomers",
   data() {
     return {
       currentPage: 1,

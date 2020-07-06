@@ -1,35 +1,31 @@
 <template>
   <div id="nav-bar">
     <ul>
-      <router-link class="" to="/admin/dashboard">
+      <router-link class="" to="/front/dashboard">
         <li>Dashboard</li>
       </router-link>
 
-      <router-link class="" to="/admin/customers">
+      <router-link class="" to="/front/customers">
         <li>Customers</li>
       </router-link>
 
-      <router-link class="" to="/admin/wallets">
+      <router-link class="" to="/front/wallets">
         <li>Wallets</li>
       </router-link>
 
-      <router-link class="" to="/admin/transfers">
+      <router-link class="" to="/front/transfers">
         <li>Transfers</li>
       </router-link>
 
-      <router-link class="" to="/admin/store-wallet">
+      <router-link class="" to="/front/store-wallet">
         <li>Store Wallet</li>
       </router-link>
 
-      <router-link class="" to="/admin/news">
-        <li>News</li>
-      </router-link>
-
-      <router-link class="" to="/admin/staff">
+      <router-link class="" to="/front/staff">
         <li>Staff</li>
       </router-link>
 
-      <router-link class="" to="/admin">
+      <router-link class="" to="/staff">
         <li>Log Out</li>
       </router-link>
     </ul>
@@ -37,7 +33,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "FrontNavbar"
+};
 </script>
 
 <style lang="scss" scoped>
