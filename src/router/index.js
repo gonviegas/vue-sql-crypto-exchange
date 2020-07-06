@@ -4,8 +4,8 @@ import Home from "../views/Home.vue";
 import UserAuth from "../views/UserAuth.vue";
 import StaffAuth from "../views/StaffAuth.vue";
 import AdminDashboard from "../views/AdminDashboard.vue";
-import UserDashboard from "../views/UserDashboard.vue";
 import FrontDashboard from "../views/FrontDashboard.vue";
+import UserDashboard from "../views/UserDashboard.vue";
 
 Vue.use(VueRouter);
 
@@ -76,7 +76,6 @@ const routes = [
       }
     ]
   },
-
   {
     path: "/staff",
     name: "staff",
@@ -93,6 +92,7 @@ const routes = [
   {
     path: "/admin/dashboard",
     name: "AdminDashboard",
+    alias: "/admin",
     component: AdminDashboard,
     children: [
       {
@@ -134,6 +134,7 @@ const routes = [
   {
     path: "/front/dashboard",
     name: "FrontDashboard",
+    alias: "/front/",
     component: FrontDashboard,
     children: [
       {

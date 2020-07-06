@@ -44,20 +44,22 @@ export default {
       elementsPerPage: 15,
       ascending: false,
       sortColumn: "",
-      rows: ""
+      rows: "",
+      fetchAll_costumer: ""
     };
   },
   methods: {
-    getUsers() {
+    fetchAllCostumer() {
       axios({
         method: "post",
-        url: "http://localhost/api/api.php",
+        url: this.$axios_url,
         data: {
-          action: "admin_fetchAll_users"
+          action: "staff_fetchAllCustomer"
         }
       })
         .then(res => {
-          this.rows = res.data;
+          this.fetchAll_costumer = res.data;
+          this.rows = this.fetchAll_costumer;
         })
 
         .catch(err => {
@@ -104,7 +106,7 @@ export default {
     }
   },
   beforeMount() {
-    this.getUsers();
+    this.fetchAllCostumer();
   }
 };
 </script>

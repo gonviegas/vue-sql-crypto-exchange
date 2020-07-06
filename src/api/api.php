@@ -4,8 +4,8 @@ require_once ('db.php');
 $received_data = json_decode(file_get_contents('php://input'));
 $data = array();
 
-//ADMIN LVL 0+1 - FETCH ALL USERS
-if ($received_data->action == "admin_fetchAll_users") {
+//STAFF - FETCH ALL USERS
+if ($received_data->action == "staff_fetchAllCustomer") {
     
     $sql = "SELECT * FROM customer ORDER BY id ASC";
     
@@ -20,6 +20,92 @@ if ($received_data->action == "admin_fetchAll_users") {
     
     echo json_encode($data);
 }
+
+//STAFF - FETCH ALL WALLETS
+if ($received_data->action == "staff_fetchAllWallet") {
+    
+    $sql = "SELECT * FROM wallet ORDER BY id ASC";
+    
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+    
+    while ( $row = $stmt->fetch())  {
+        $data[]=$row;
+    }
+    
+    $stmt = null;
+    
+    echo json_encode($data);
+}
+
+//STAFF - FETCH ALL STAFF
+if ($received_data->action == "staff_fetchAllStaff") {
+    
+    $sql = "SELECT * FROM staff ORDER BY id ASC";
+    
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+    
+    while ( $row = $stmt->fetch())  {
+        $data[]=$row;
+    }
+    
+    $stmt = null;
+    
+    echo json_encode($data);
+}
+
+
+//STAFF - FETCH STORE WALLET
+if ($received_data->action == "staff_fetchAllStoreWallet") {
+    
+    $sql = "SELECT * FROM store_wallet ORDER BY id ASC";
+    
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+    
+    while ( $row = $stmt->fetch())  {
+        $data[]=$row;
+    }
+    
+    $stmt = null;
+    
+    echo json_encode($data);
+}
+
+//STAFF - FETCH ALL TRANSFERS
+if ($received_data->action == "staff_fetchAllTransfer") {
+    
+    $sql = "SELECT * FROM transfer ORDER BY id ASC";
+    
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+    
+    while ( $row = $stmt->fetch())  {
+        $data[]=$row;
+    }
+    
+    $stmt = null;
+    
+    echo json_encode($data);
+}
+
+if ($received_data->action == "admin_fetchAllNews") {
+    
+    $sql = "SELECT * FROM news ORDER BY id ASC";
+    
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+    
+    while ( $row = $stmt->fetch())  {
+        $data[]=$row;
+    }
+    
+    $stmt = null;
+    
+    echo json_encode($data);
+}
+
 
 //USER - SIGNUP
 if ($received_data->action == "user_signup") {
