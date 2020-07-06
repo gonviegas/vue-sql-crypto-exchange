@@ -5,6 +5,7 @@
     <router-link class="" to="/user/wallet">Wallet</router-link>
     <router-link class="" to="/user/trade-history">Trade History</router-link>
     <router-link class="" to="/user/account">Account</router-link>
+    <router-link class="" to="/">Log Out</router-link>
   </div>
 </template>
 

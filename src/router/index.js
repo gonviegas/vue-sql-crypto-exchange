@@ -96,13 +96,33 @@ const routes = [
     children: [
       {
         path: "/admin/customers",
-        name: "AdminCustomersTable",
-        component: () => import("../components/admin/AdminCustomersTable.vue")
+        name: "AdminCustomers",
+        component: () => import("../components/admin/AdminCustomers.vue")
       },
       {
-        path: "/admin/crypto-api",
-        name: "CryptoApi",
-        component: () => import("../components/CryptoApi.vue")
+        path: "/admin/wallets",
+        name: "AdminWallets",
+        component: () => import("../components/admin/AdminWallets.vue")
+      },
+      {
+        path: "/admin/news",
+        name: "AdminNews",
+        component: () => import("../components/admin/AdminNews.vue")
+      },
+      {
+        path: "/admin/staff",
+        name: "AdminStaff",
+        component: () => import("../components/admin/AdminStaff.vue")
+      },
+      {
+        path: "/admin/store-wallet",
+        name: "AdminStoreWallet",
+        component: () => import("../components/admin/AdminStoreWallet.vue")
+      },
+      {
+        path: "/admin/transfers",
+        name: "AdminTransfers",
+        component: () => import("../components/admin/AdminTransfers.vue")
       }
     ]
   }

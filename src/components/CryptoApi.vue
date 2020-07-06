@@ -14,7 +14,7 @@ export default {
   name: "CryptoApi",
   data() {
     return {
-      data: null,
+      data: null
     };
   },
   methods: {
@@ -36,9 +36,7 @@ export default {
         });
     }
   }
-}
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

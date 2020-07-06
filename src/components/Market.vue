@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     {{ data }}
   </div>
 </template>
@@ -12,7 +11,7 @@ export default {
   name: "Market",
   data() {
     return {
-      data: null,
+      data: null
     };
   },
   methods: {
@@ -37,10 +36,7 @@ export default {
   beforeMount() {
     this.getCrypto();
   }
-
-}
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

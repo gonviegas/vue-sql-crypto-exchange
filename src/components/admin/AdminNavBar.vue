@@ -1,15 +1,37 @@
 <template>
   <div id="nav-bar">
     <ul>
-      <router-link class="" to="/admin/dashboard"
-        ><li>Dashboard</li></router-link
-      >
-      <router-link class="" to="/admin/customers"
-        ><li>Users</li></router-link
-      >
-      <router-link class="" to="/admin/crypto-api"
-        ><li>Crypto-Api</li></router-link
-      >
+      <router-link class="" to="/admin/dashboard">
+        <li>Dashboard</li>
+      </router-link>
+
+      <router-link class="" to="/admin/customers">
+        <li>Customers</li>
+      </router-link>
+
+      <router-link class="" to="/admin/wallets">
+        <li>Wallets</li>
+      </router-link>
+
+      <router-link class="" to="/admin/transfers">
+        <li>Transfers</li>
+      </router-link>
+
+      <router-link class="" to="/admin/store-wallet">
+        <li>Store Wallet</li>
+      </router-link>
+
+      <router-link class="" to="/admin/news">
+        <li>News</li>
+      </router-link>
+
+      <router-link class="" to="/admin/staff">
+        <li>Staff</li>
+      </router-link>
+
+      <router-link class="" to="/admin">
+        <li>Log Out</li>
+      </router-link>
     </ul>
   </div>
 </template>

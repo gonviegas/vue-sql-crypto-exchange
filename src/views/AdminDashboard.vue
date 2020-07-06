@@ -1,7 +1,6 @@
 <template>
   <div>
     <AdminNavBar />
-    <h3>AdminDashboard</h3>
     <router-view />
   </div>
 </template>
@@ -11,7 +10,7 @@ import AdminNavBar from "@/components/admin/AdminNavBar.vue";
 export default {
   name: "AdminDashboard",
   components: {
-    AdminNavBar,
+    AdminNavBar
   }
 };
 </script>

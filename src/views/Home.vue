@@ -12,7 +12,7 @@ import HomeNavBar from "@/components/home/HomeNavBar.vue";
 export default {
   name: "Home",
   components: {
-    HomeNavBar,
+    HomeNavBar
   }
 };
 </script>
