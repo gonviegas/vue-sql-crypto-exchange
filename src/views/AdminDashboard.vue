@@ -11,7 +11,7 @@ import AdminNavBar from "@/components/admin/AdminNavBar.vue";
 export default {
   name: "AdminDashboard",
   components: {
-    AdminNavBar
+    AdminNavBar,
   }
 };
 </script>

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <fieldset>
-      <input type="submit" value="Get Crypto" @click.prevent="getUsers()" />
-    </fieldset>
+    
     {{ data }}
   </div>
 </template>
@@ -11,14 +9,14 @@
 import axios from "axios";
 
 export default {
-  name: "CryptoApi",
+  name: "Market",
   data() {
     return {
       data: null,
     };
   },
   methods: {
-    getUsers() {
+    getCrypto() {
       axios({
         method: "get",
         url:
@@ -35,7 +33,11 @@ export default {
           console.log("Network Error", err);
         });
     }
+  },
+  beforeMount() {
+    this.getCrypto();
   }
+
 }
 </script>
 

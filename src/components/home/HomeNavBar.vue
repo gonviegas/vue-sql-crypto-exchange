@@ -2,9 +2,9 @@
   <div id="nav-bar">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
       <div class="container">
-        <a class="navbar-brand" href="#">
+        <router-link class="nav-link" to="/">
           <img src="http://placehold.it/150x50?text=Logo" alt="" />
-        </a>
+        </router-link>
         <button
           class="navbar-toggler"
           type="button"
@@ -18,31 +18,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <router-link class="nav-link" to="/"
-                ><li>Home</li>
-                <span class="sr-only">(current)</span>
+            <li class="nav-item active"></li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/news">
+                <li>News</li>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/user/login"
-                ><li>Login</li></router-link
-              >
+              <router-link class="nav-link" to="/market">
+                <li>Market</li>
+              </router-link>
+            </li>
+
+            <li class="nav-item">
+              <router-link class="nav-link" to="/user/login">
+                <li>Login</li>
+              </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/user/signup"
-                ><li>Sign Up</li></router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/admin/login"
-                ><li>Admin</li></router-link
-              >
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/admin/dashboard"
-                ><li>Admin Dashboard</li></router-link
-              >
+              <router-link class="nav-link" to="/user/signup">
+                <li>Sign Up</li>
+              </router-link>
             </li>
           </ul>
         </div>

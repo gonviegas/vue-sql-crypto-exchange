@@ -6,7 +6,7 @@ function conn() {
     $host = 'localhost';
 
     // ******* DEV 
-    $db   = 'dummy';
+    $db   = 'crypto-exchange';
     $user = 'usurp';
     $pass = 'usurp';
     //         DEV *******

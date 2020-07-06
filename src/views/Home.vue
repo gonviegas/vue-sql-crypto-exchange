@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <HomeNavBar />
-    <h1>MAIN PAGE</h1>
+    <router-view />
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import HomeNavBar from "@/components/home/HomeNavBar.vue";
 export default {
   name: "Home",
   components: {
-    HomeNavBar
+    HomeNavBar,
   }
 };
 </script>

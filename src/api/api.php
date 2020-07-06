@@ -1,39 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:8080");
-header('Access-Control-Allow-Headers: Content-Type');
-
-function conn() {
-    $host = 'localhost';
-
-    // ******* DEV 
-    $db   = 'crypto-exchange';
-    $user = 'root';
-    $pass = 'root';
-    //         DEV *******
-    
-    // ******* DEPLOYMENT
-    // $db   = 'gonvpt_dummy';
-    // $user = 'gonvpt_regular';
-    // $pass = '#(iXS^WT!Zjq';
-    //         DEPLOYMENT *******
-    
-    $charset = 'utf8mb4';
-
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-
-    $options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-  ];
-    try {
-        $pdo = new PDO($dsn, $user, $pass, $options);
-        return $pdo;
-        $pdo = null;
-    } catch (\PDOException $e) {
-        throw new \PDOException($e->getMessage(), (int)$e->getCode());
-    };
-}
+require_once ('db.php');
 
 $received_data = json_decode(file_get_contents('php://input'));
 $data = array();
@@ -131,12 +97,11 @@ if ($received_data->action == "user_login") {
 
         $stmt = conn()->prepare($sql);
         if ($stmt->execute([$email])) {
-            $n = $stmt->rowCount();
             $r = $stmt->fetch();
 
             $stmt = null; 
 
-            if ($n === 1 && password_verify($password, $r['password'])) {
+            if (password_verify($password, $r['password'])) {
                 if ('active' == $r['status']) {
                     session_start();
                     //session_regenerate_id();

@@ -1,9 +1,13 @@
 <template>
   <div id="nav-bar">
     <ul>
-      <router-link to="/admin/dashboard"><li>Dashboard</li></router-link>
-      <router-link to="/admin/dashboard/users"><li>Users</li></router-link>
-      <router-link to="/admin/dashboard/crypto-api"
+      <router-link class="" to="/admin/dashboard"
+        ><li>Dashboard</li></router-link
+      >
+      <router-link class="" to="/admin/customers"
+        ><li>Users</li></router-link
+      >
+      <router-link class="" to="/admin/crypto-api"
         ><li>Crypto-Api</li></router-link
       >
     </ul>

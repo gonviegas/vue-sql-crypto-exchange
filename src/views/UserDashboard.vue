@@ -1,13 +1,25 @@
 <template>
   <div>
-    <p>USER Dashboard</p>
+    <UserNavbar />
+    <Market />
+    <News />
+    <router-view />
   </div>
 </template>
 
 <script>
+import UserNavbar from "@/components/user/UserNavbar.vue";
+import Market from "@/components/Market.vue";
+import News from "@/components/News.vue";
+
 export default {
-  name: "UserDashboard"
+  name: "UserDashboard",
+  components: {
+    UserNavbar,
+    Market,
+    News
+  }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss"></style>
