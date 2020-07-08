@@ -1,6 +1,35 @@
 <template>
   <div>
-    <div>{{ fetchAll_store_wallet }}</div>
+    {{ crypto }}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="panel-title">Store Wallet</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <tr>
+            <th>Currency</th>
+            <th>Balance</th>
+            <th>Fee</th>
+            <th>USD</th>
+            <th>EUR</th>
+          </tr>
+          <tr v-for="row in allData" :key="row.id">
+            <td>{{ row.currency | uppercase }}</td>
+            <td>{{ row.balance }}</td>
+            <td>{{ row.fee }}%</td>
+            <td>{{ row.usd }}$</td>
+            <td>{{ row.eur }} €</td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,20 +40,38 @@ export default {
   name: "FrontStoreWallet",
   data() {
     return {
-      fetchAll_store_wallet: ""
+      allData: "",
+      filter: "",
+      crypto: null
     };
   },
+
   methods: {
-    fetchAllStoreWallet() {
+    fetchAll() {
       axios({
         method: "post",
         url: this.$axios_url,
         data: {
-          action: "staff_fetchAllStoreWallet"
+          action: "staff_fetchAllStoreWallet",
+          btc_usd: this.l
         }
       })
         .then(res => {
-          this.fetchAll_store_wallet = res.data;
+          this.allData = res.data;
+        })
+
+        .catch(err => {
+          console.log("Network Error", err);
+        });
+    },
+    getCrypto() {
+      axios({
+        method: "get",
+        url:
+          "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,XRP,XLM,DGB&tsyms=USD,EUR"
+      })
+        .then(res => {
+          this.crypto = res.data;
         })
 
         .catch(err => {
@@ -32,10 +79,23 @@ export default {
         });
     }
   },
+  filters: {
+    capitalize(filter) {
+      if (!filter) return "";
+      filter = filter.toString();
+      return filter.charAt(0).toUpperCase() + filter.slice(1);
+    },
+    uppercase(filter) {
+      if (!filter) return "";
+      filter = filter.toString();
+      return filter.toUpperCase();
+    }
+  },
   beforeMount() {
-    this.fetchAllStoreWallet();
+    this.getCrypto();
+    this.fetchAll();
   }
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

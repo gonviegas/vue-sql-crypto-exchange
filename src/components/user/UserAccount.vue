@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h1>user account</h1>
+    <h1>user verify</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: "UserAccount"
+  name: "UserAuthVerify"
 };
 </script>
 

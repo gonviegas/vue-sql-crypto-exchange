@@ -13,14 +13,18 @@
       <div class="table-responsive">
         <table class="table table-bordered table-striped">
           <tr>
-            <th>customer_id</th>
-            <th>currency</th>
-            <th>balance</th>
+            <th>Currency</th>
+            <th>Balance</th>
+            <th>Fee</th>
+            <th>USD</th>
+            <th>EUR</th>
           </tr>
           <tr v-for="row in allData" :key="row.id">
-            <td>{{ row.customer_id }}</td>
             <td>{{ row.currency | uppercase }}</td>
             <td>{{ row.balance }}</td>
+            <td>{{ row.fee }}%</td>
+            <td>{{ row.usd }}$</td>
+            <td>{{ row.eur }} €</td>
           </tr>
         </table>
       </div>
@@ -32,7 +36,7 @@
 import axios from "axios";
 
 export default {
-  name: "FrontWallets",
+  name: "AdminStoreWallet",
   data() {
     return {
       allData: "",
@@ -46,7 +50,7 @@ export default {
         method: "post",
         url: this.$axios_url,
         data: {
-          action: "staff_fetchAllWallet"
+          action: "staff_fetchAllStoreWallet"
         }
       })
         .then(res => {

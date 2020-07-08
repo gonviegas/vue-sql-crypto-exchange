@@ -7,8 +7,8 @@ function conn() {
 
     // ******* DEV 
     $db   = 'crypto-exchange';
-    $user = 'usurp';
-    $pass = 'usurp';
+    $user = 'root';
+    $pass = 'root';
     //         DEV *******
     
     // ******* DEPLOYMENT

@@ -13,14 +13,26 @@
       <div class="table-responsive">
         <table class="table table-bordered table-striped">
           <tr>
-            <th>customer_id</th>
-            <th>currency</th>
-            <th>balance</th>
+            <th>id</th>
+            <th>email</th>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>verified</th>
+            <th>status</th>
+            <th>password</th>
+            <th>token</th>
+            <th>timestamp</th>
           </tr>
           <tr v-for="row in allData" :key="row.id">
-            <td>{{ row.customer_id }}</td>
-            <td>{{ row.currency | uppercase }}</td>
-            <td>{{ row.balance }}</td>
+            <td>{{ row.id }}</td>
+            <td>{{ row.email }}</td>
+            <td>{{ row.first_name | capitalize }}</td>
+            <td>{{ row.last_name | capitalize }}</td>
+            <td>{{ row.verified }}</td>
+            <td>{{ row.status | uppercase }}</td>
+            <td>{{ row.password }}</td>
+            <td>{{ row.token }}</td>
+            <td>{{ row.timestamp }}</td>
           </tr>
         </table>
       </div>
@@ -32,7 +44,7 @@
 import axios from "axios";
 
 export default {
-  name: "FrontWallets",
+  name: "AdminCustomers",
   data() {
     return {
       allData: "",
@@ -46,7 +58,7 @@ export default {
         method: "post",
         url: this.$axios_url,
         data: {
-          action: "staff_fetchAllWallet"
+          action: "staff_fetchAllCustomer"
         }
       })
         .then(res => {

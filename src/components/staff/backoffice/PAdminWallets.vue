@@ -32,7 +32,7 @@
 import axios from "axios";
 
 export default {
-  name: "FrontWallets",
+  name: "AdminWallets",
   data() {
     return {
       allData: "",
@@ -56,7 +56,14 @@ export default {
         .catch(err => {
           console.log("Network Error", err);
         });
-    }
+    },
+    openModel() {
+      this.first_name = "";
+      this.last_name = "";
+      this.actionButton = "Insert";
+      this.dynamicTitle = "Add Data";
+      this.myModel = true;
+    },
   },
   filters: {
     capitalize(filter) {

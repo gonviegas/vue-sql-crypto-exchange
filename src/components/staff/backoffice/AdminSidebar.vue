@@ -42,25 +42,25 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-#nav-bar {
-  display: flex;
-  width: 100%;
-  margin-bottom: 50px;
-  ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0 20px 0 0;
-    li {
-      font-size: 2rem;
-      padding: 2px 10px;
-      cursor: pointer;
+<style lang="scss">
+// #nav-bar {
+//   display: flex;
+//   width: 100%;
+//   margin-bottom: 50px;
+//   ul {
+//     display: flex;
+//     list-style: none;
+//     padding: 0;
+//     margin: 0 20px 0 0;
+//     li {
+//       font-size: 2rem;
+//       padding: 2px 10px;
+//       cursor: pointer;
 
-      &:hover {
-        color: #009e0d;
-      }
-    }
-  }
-}
+//       &:hover {
+//         color: #009e0d;
+//       }
+//     }
+//   }
+// }
 </style>

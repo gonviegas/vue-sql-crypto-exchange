@@ -1,6 +1,40 @@
 <template>
   <div>
-    <div>{{ fetchAll_staff }}</div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="panel-title">Store Wallet</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <tr>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>username</th>
+            <th>email</th>
+            <th>level</th>
+            <th>active</th>
+            <th>password</th>
+            <th>token</th>
+          </tr>
+          <tr v-for="row in allData" :key="row.id">
+            <td>{{ row.first_name | capitalize }}</td>
+            <td>{{ row.last_name | capitalize }}</td>
+            <td>{{ row.username }}</td>
+            <td>{{ row.email }}</td>
+            <td>{{ row.level | uppercase }}</td>
+            <td>{{ row.active }}</td>
+            <td>{{ row.password }}</td>
+            <td>{{ row.token }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,11 +45,13 @@ export default {
   name: "FrontStaff",
   data() {
     return {
-      fetchAll_staff: ""
+      allData: "",
+      filter: ""
     };
   },
+
   methods: {
-    fetchAllStaff() {
+    fetchAll() {
       axios({
         method: "post",
         url: this.$axios_url,
@@ -24,7 +60,7 @@ export default {
         }
       })
         .then(res => {
-          this.fetchAll_staff = res.data;
+          this.allData = res.data;
         })
 
         .catch(err => {
@@ -32,10 +68,22 @@ export default {
         });
     }
   },
+  filters: {
+    capitalize(filter) {
+      if (!filter) return "";
+      filter = filter.toString();
+      return filter.charAt(0).toUpperCase() + filter.slice(1);
+    },
+    uppercase(filter) {
+      if (!filter) return "";
+      filter = filter.toString();
+      return filter.toUpperCase();
+    }
+  },
   beforeMount() {
-    this.fetchAllStaff();
+    this.fetchAll();
   }
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

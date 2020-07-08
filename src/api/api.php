@@ -61,7 +61,7 @@ if ($received_data->action == "staff_fetchAllStaff") {
 
 //STAFF - FETCH STORE WALLET
 if ($received_data->action == "staff_fetchAllStoreWallet") {
-    
+
     $sql = "SELECT * FROM store_wallet ORDER BY id ASC";
     
     $stmt = conn()->prepare($sql);
@@ -93,6 +93,7 @@ if ($received_data->action == "staff_fetchAllTransfer") {
     echo json_encode($data);
 }
 
+//ADMIN - FETCH ALL NEWS
 if ($received_data->action == "admin_fetchAllNews") {
     
     $sql = "SELECT * FROM news ORDER BY date ASC";
@@ -109,6 +110,38 @@ if ($received_data->action == "admin_fetchAllNews") {
     echo json_encode($data);
 }
 
+//ADMIN - INSERT 
+if($received_data->action == "admin_insertStoreWallet")
+{
+  $currency = $received_data->currency;
+  $balance = $received_data->balance;
+
+ $sql = "INSERT INTO store_wallet (currency, balance, fee, usd, eur) VALUES (?, ?, ?, ?, ?)";
+
+ $stmt = conn()->prepare($sql);
+ $stmt->execute([$currency, $balance, 0, 0, 0]);
+
+ $output = array('message' => 'Data Inserted');
+
+ echo json_encode($output);
+}
+
+if($received_data->action == "admin_insertCustomer")
+{
+    $data = array(
+    ':first_name' => $received_data->first_name,
+    ':last_name' => $received_data->last_name
+    );
+
+    $sql = " INSERT INTO customer (first_name, last_name) VALUES (:first_name, :last_name)";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute($data);
+
+    $output = array( 'message' => 'Data Inserted');
+
+    echo json_encode($output);
+}
 
 //USER - SIGNUP
 if ($received_data->action == "user_signup") {
@@ -229,3 +262,4 @@ if ($received_data->action == "user_login") {
 
     echo json_encode($data);
 }
+

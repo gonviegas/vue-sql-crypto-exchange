@@ -1,16 +1,17 @@
 <template>
   <div>
-    <AdminNavbar />
+    <AdminSidebar />
     <router-view />
   </div>
 </template>
 
 <script>
-import AdminNavbar from "@/components/staff/backoffice/AdminNavbar.vue";
+import AdminSidebar from "@/components/staff/backoffice/AdminSidebar.vue";
+
 export default {
   name: "AdminDashboard",
   components: {
-    AdminNavbar
+    AdminSidebar
   }
 };
 </script>
