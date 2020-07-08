@@ -68,7 +68,7 @@ export default {
     userSignUp() {
       axios({
         method: "post",
-        url: "http://localhost/api/api.php",
+        url: this.$axios_url,
         data: {
           email: this.email,
           password: this.password,
@@ -78,7 +78,12 @@ export default {
       })
         .then(res => {
           this.resetForm();
-          this.msg = res.data.msg;
+          if (res.data.err) {
+            this.msg = res.data.msg;
+          } else {
+            this.msg =
+              "Signup successful! Please follow the link in your email to verify your account";
+          }
         })
         .catch(err => {
           this.msg = err;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ data }}
+    <div>{{ data }}</div>
   </div>
 </template>
 
@@ -11,15 +11,17 @@ export default {
   name: "Market",
   data() {
     return {
-      data: null
+      data: ""
     };
   },
   methods: {
     getCrypto() {
       axios({
-        method: "get",
-        url:
-          "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,XRP,XLM,DGB&tsyms=USD,EUR"
+        method: "post",
+        url: this.$axios_url_news_market_api,
+        data: {
+          action: "market,EUR"
+        }
       })
         .then(res => {
           this.data = res.data;

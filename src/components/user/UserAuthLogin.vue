@@ -45,7 +45,7 @@ export default {
     userLogin() {
       axios({
         method: "post",
-        url: "http://localhost/api/api.php",
+        url: this.$axios_url,
         data: {
           email: this.email,
           password: this.password,

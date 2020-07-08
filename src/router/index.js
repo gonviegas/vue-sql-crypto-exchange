@@ -46,6 +46,11 @@ const routes = [
         path: "reset",
         name: "UserAuthReset",
         component: () => import("../components/user/UserAuthReset.vue")
+      },
+      {
+        path: "verify",
+        name: "UserAuthVerify",
+        component: () => import("../components/user/UserAuthVerify.vue")
       }
     ]
   },

@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:8080");
+header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Headers: Content-Type');
 
 function conn() {
@@ -12,7 +12,7 @@ function conn() {
     //         DEV *******
     
     // ******* DEPLOYMENT
-    // $db   = 'gonvpt_dummy';
+    // $db   = 'gonvpt_crypto-exchange';
     // $user = 'gonvpt_regular';
     // $pass = '#(iXS^WT!Zjq';
     //         DEPLOYMENT *******
@@ -33,4 +33,43 @@ function conn() {
     } catch (\PDOException $e) {
         throw new \PDOException($e->getMessage(), (int)$e->getCode());
     };
+}
+
+//  PHP Mailer
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+function email($to, $subject, $message)
+{
+    require $_SERVER['DOCUMENT_ROOT'].'vendor/autoload.php';
+    $mail = new PHPMailer(true);
+
+    try {
+      
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $mail->isSMTP();
+        $mail->Host       = 'hosting63.serverhs.org';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'mail@gonv.pt';
+        $mail->Password   = '%mD-G+qxIOE^';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = 587;
+
+        //Recipients
+        $mail->setFrom('mail@gonv.pt', 'GONV.PT');
+        $mail->addAddress($to);
+        $mail->addReplyTo('no-reply@gonv.pt', 'Information');
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body    = $message;
+        //$mail->AltBody = 'Copy-past this code somewhere: '.$token;
+
+        $mail->send();
+    } catch (Exception $e) {
+        echo "Mailer Error: {$mail->ErrorInfo}";
+    }
 }

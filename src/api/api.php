@@ -1,6 +1,9 @@
 <?php
 require_once ('db.php');
 
+// $verify_address = "https://www.gonv.pt/verify";
+$verify_address = "http://localhost:8080/#/user/verify";
+
 $received_data = json_decode(file_get_contents('php://input'));
 $data = array();
 
@@ -92,7 +95,7 @@ if ($received_data->action == "staff_fetchAllTransfer") {
 
 if ($received_data->action == "admin_fetchAllNews") {
     
-    $sql = "SELECT * FROM news ORDER BY id ASC";
+    $sql = "SELECT * FROM news ORDER BY date ASC";
     
     $stmt = conn()->prepare($sql);
     $stmt->execute();
@@ -144,19 +147,20 @@ if ($received_data->action == "user_signup") {
                 $sql = "INSERT IGNORE INTO customer (email, first_name, last_name, status, password, token, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
                 $stmt = conn()->prepare($sql);
+
+                $data['err']= false;
+                $data['msg']= "Sign Up successful. Please follow the link in your email to verify your account";
                 
                 if ($stmt->execute([$email, $first_name, $last_name, $status, $password, $token, $timestamp])) {
                     $stmt = null;
 
-                    $data['err']= true;
-                    $data['msg']= "Sign Up successful. Please follow the link in your email to verify your account";
+                    $subject = 'Account verification';
+                    $message = 'Thank you for signing up!<br>Click the following link to verify your account: <br><b><a href='.$verify_address.'</a></b>';
                     
+                        // $message = 'Thank you for signing up!<br>Click the following link to verify your account: <br><b><a href=https://www.gonv.pt/verify.php?token='.$token.'&email='.$email.'>'.$token.'</a></b>';
 
-                    // $subject = 'Verify your account';
-                    // $message = 'Click the link to verify your account: <br><b><a href=https://www.app.com/verify.php?token='.$token.'&email='.$email.'>'.$token.'</a></b>';
-                    // $output = '<p>A confirmation message has been sent to '.$email.'</p>';
+                    email($email, $subject, $message);
 
-                    // email($email, $subject, $message, $output);
                 }
             } 
         }
@@ -193,7 +197,6 @@ if ($received_data->action == "user_login") {
                     //session_regenerate_id();
 
                     $_SESSION['loggedin'] = true;
-
                     $_SESSION['email'] = $r['email'];
                     $_SESSION['token'] = $r['token'];
                     
