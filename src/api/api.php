@@ -113,13 +113,15 @@ if ($received_data->action == "admin_fetchAllNews") {
 //ADMIN - INSERT 
 if($received_data->action == "admin_insertStoreWallet")
 {
-  $currency = $received_data->currency;
-  $balance = $received_data->balance;
+    $data = array(
+        ':currency' => $received_data->currency,
+        ':balance' => $received_data->balance
+    );
 
- $sql = "INSERT INTO store_wallet (currency, balance, fee, usd, eur) VALUES (?, ?, ?, ?, ?)";
+ $sql = "INSERT INTO store_wallet (currency, balance, fee, usd, eur) VALUES (:currency, :balance, 1, 0, 0)";
 
  $stmt = conn()->prepare($sql);
- $stmt->execute([$currency, $balance, 0, 0, 0]);
+ $stmt->execute($data);
 
  $output = array('message' => 'Data Inserted');
 

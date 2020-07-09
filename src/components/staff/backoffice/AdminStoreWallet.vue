@@ -16,23 +16,23 @@
           </div>
         </div>
       </div>
-    <div class="panel-body">
-      <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-          <tr>
-            <th>Currency</th>
-            <th>Balance</th>
-            <th>Fee</th>
-            <th>USD</th>
-            <th>EUR</th>
-          </tr>
-          <tr v-for="row in allData" :key="row.id">
-            <td>{{ row.currency | uppercase }}</td>
-            <td>{{ row.balance }}</td>
-            <td>{{ row.fee }}%</td>
-            <td>{{ row.usd }}$</td>
-            <td>{{ row.eur }} €</td>
-          <td>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped">
+            <tr>
+              <th>Currency</th>
+              <th>Balance</th>
+              <th>Fee</th>
+              <th>USD</th>
+              <th>EUR</th>
+            </tr>
+            <tr v-for="row in allData" :key="row.id">
+              <td>{{ row.currency | uppercase }}</td>
+              <td>{{ row.balance }}</td>
+              <td>{{ row.fee }}%</td>
+              <td>{{ row.usd }}$</td>
+              <td>{{ row.eur }} €</td>
+              <td>
                 <button
                   type="button"
                   name="edit"
@@ -80,11 +80,11 @@
                   </div>
                   <div class="form-group">
                     <label>Enter Balance</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="balance"
-                    />
+                    <input type="text" class="form-control" v-model="balance" />
+                  </div>
+                  <div class="form-group">
+                    <label>Fee</label>
+                    <input type="text" class="form-control" v-model="fee" />
                   </div>
                   <br />
                   <div align="center">
@@ -143,7 +143,7 @@ export default {
     openModel() {
       this.currency = "";
       this.balance = "";
-      this.actionButton = "Insert";
+      (this.fee = ""), (this.actionButton = "Insert");
       this.dynamicTitle = "Add Data";
       this.myModel = true;
     },
@@ -156,7 +156,8 @@ export default {
             data: {
               action: "admin_insertStoreWallet",
               currency: this.currency,
-              balance: this.balance
+              balance: this.balance,
+              fee: this.fee
             }
           })
             .then(res => {

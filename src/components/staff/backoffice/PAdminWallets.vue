@@ -63,7 +63,7 @@ export default {
       this.actionButton = "Insert";
       this.dynamicTitle = "Add Data";
       this.myModel = true;
-    },
+    }
   },
   filters: {
     capitalize(filter) {

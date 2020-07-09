@@ -20,10 +20,10 @@
         <div class="table-responsive">
           <table class="table table-bordered table-striped">
             <tr>
-            <th>customer_id</th>
-            <th>currency</th>
-            <th>balance</th>
-          <td>
+              <th>customer_id</th>
+              <th>currency</th>
+              <th>balance</th>
+              <td>
                 <button
                   type="button"
                   name="edit"
@@ -135,7 +135,7 @@ export default {
       this.actionButton = "Insert";
       this.dynamicTitle = "Add Data";
       this.myModel = true;
-    },
+    }
   },
   filters: {
     capitalize(filter) {
