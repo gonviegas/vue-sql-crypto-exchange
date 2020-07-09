@@ -27,7 +27,7 @@
             <td>{{ row.last_name | capitalize }}</td>
             <td>{{ row.username }}</td>
             <td>{{ row.email }}</td>
-            <td>{{ row.level | uppercase }}</td>
+            <td>{{ row.level }}</td>
             <td>{{ row.active }}</td>
             <td>{{ row.password }}</td>
             <td>{{ row.token }}</td>

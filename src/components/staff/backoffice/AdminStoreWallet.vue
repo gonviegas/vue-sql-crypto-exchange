@@ -1,25 +1,20 @@
 <template>
   <div>
     <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class="row">
-          <div class="col-md-6">
-            <h3 class="panel-title">Sample Data</h3>
-          </div>
-          <div class="col-md-6" align="right">
-            <input
-              type="button"
-              class="btn btn-success btn-xs"
-              @click="openModel"
-              value="Add"
-            />
-          </div>
-        </div>
+    <div class="panel-heading">
+     <div class="row">
+      <div class="col-md-6">
+       <h3 class="panel-title">Sample Data</h3>
       </div>
-      <div class="panel-body">
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped">
-            <tr>
+      <div class="col-md-6" align="right">
+       <input type="button" class="btn btn-success btn-xs" @click="openModel" value="Add" />
+      </div>
+     </div>
+    </div>
+    <div class="panel-body">
+     <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+       <tr>
               <th>Currency</th>
               <th>Balance</th>
               <th>Fee</th>
@@ -32,45 +27,26 @@
               <td>{{ row.fee }}%</td>
               <td>{{ row.usd }}$</td>
               <td>{{ row.eur }} €</td>
-              <td>
-                <button
-                  type="button"
-                  name="edit"
-                  class="btn btn-primary btn-xs edit"
-                  @click="fetchData(row.id)"
-                >
-                  Edit
-                </button>
-              </td>
-              <td>
-                <button
-                  type="button"
-                  name="delete"
-                  class="btn btn-danger btn-xs delete"
-                  @click="deleteData(row.id)"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
+              <td><button type="button" name="edit" class="btn btn-primary btn-xs edit" @click="fetchData(row.id)">Edit</button></td>
+        <td><button type="button" name="delete" class="btn btn-danger btn-xs delete" @click="deleteData(row.id)">Delete</button></td>
+       </tr>
+      </table>
+     
+     </div>
     </div>
-    <div v-if="myModel">
-      <transition name="model">
-        <div class="modal-mask">
-          <div class="modal-wrapper">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" @click="myModel = false">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <h4 class="modal-title">{{ dynamicTitle }}</h4>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">
+   </div>
+   <div v-if="myModel">
+    <transition name="model">
+     <div class="modal-mask">
+      <div class="modal-wrapper">
+       <div class="modal-dialog">
+        <div class="modal-content">
+         <div class="modal-header">
+          <button type="button" class="close" @click="myModel=false"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">{{ dynamicTitle }}</h4>
+         </div>
+         <div class="modal-body">
+          <div class="form-group">
                     <label>Enter Currency</label>
                     <input
                       type="text"
@@ -86,24 +62,19 @@
                     <label>Fee</label>
                     <input type="text" class="form-control" v-model="fee" />
                   </div>
-                  <br />
-                  <div align="center">
-                    <input type="hidden" />
-                    <input
-                      type="button"
-                      class="btn btn-success btn-xs"
-                      v-model="actionButton"
-                      @click="submitData"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+          <br />
+          <div align="center">
+           <input type="hidden" v-model="hiddenId" />
+           <input type="button" class="btn btn-success btn-xs" v-model="actionButton" @click="submitData" />
           </div>
+         </div>
         </div>
+       </div>
+      </div>
+      </div>
       </transition>
-    </div>
-  </div>
+   </div>
+   </div>
 </template>
 
 <script>
@@ -118,8 +89,10 @@ export default {
       myModel: false,
       actionButton: "Insert",
       dynamicTitle: "Add Data",
+      hiddenId: "",
       currency: "",
-      balance: ""
+      balance: "",
+      fee: "",
     };
   },
 
@@ -141,11 +114,12 @@ export default {
         });
     },
     openModel() {
-      this.currency = "";
-      this.balance = "";
-      (this.fee = ""), (this.actionButton = "Insert");
-      this.dynamicTitle = "Add Data";
-      this.myModel = true;
+      this.currency = "",
+      this.balance = "",
+      this.fee = "",
+      this.actionButton = "Insert",
+      this.dynamicTitle = "Add Data",
+      this.myModel = true
     },
     submitData() {
       if (this.currency != "" && this.balance != "") {
@@ -159,20 +133,76 @@ export default {
               balance: this.balance,
               fee: this.fee
             }
-          })
-            .then(res => {
+          }).then(res => {
               this.myModel = false;
               this.fetchAll();
+              alert(res.data.message);
               this.currency = "";
               this.balance = "";
-              alert(res.data.message);
+              this.fee = "";
+              
             })
-
-            .catch(err => {
-              console.log("Network Error", err);
-            });
+        }
+        if(this.actionButton == 'Update') {
+          axios({
+            method: "post",
+            url: this.$axios_url,
+            data: {
+              action: "admin_updateStoreWallet",
+              currency: this.currency,
+              balance: this.balance,
+              fee: this.fee,
+              hiddenId: this.hiddenId
+            }
+          }).then(res => {
+            this.myModel = false;
+            this.fetchAllData();
+            this.currency = "";
+            this.balance = "";
+            this.fee = "",
+            this.hiddenId = '';
+            alert(res.data.message);
+          });
         }
       }
+      else {
+        alert("Fill All Field");
+      }
+    },
+      fetchData(id){
+      axios({
+        method: "post",
+        url: this.$axios_url,
+        data: {
+          action: "admin_fetchSingleStoreWallet",
+          id: id
+        }
+      }).then(res => {
+        this.currency = res.data.currency;
+        this.balance = res.data.balance;
+        this.fee = res.data.fee;
+        this.hiddenId = res.data.id;
+        this.myModel = true;
+        this.actionButton = 'Update';
+        this.dynamicTitle = 'Edit Data';
+        console.log(res.data);
+      });
+      },
+      deleteData(id){
+      if(confirm("Are you sure you want to remove this data?"))
+      {
+        axios({
+        method: "post",
+        url: this.$axios_url,
+        data: {
+          action: "admin_deleteStoreWallet",
+          id: id
+        }
+        }).then(res => {
+        this.fetchAll();
+        alert(res.data.message);
+        });
+    }
     }
   },
   filters: {

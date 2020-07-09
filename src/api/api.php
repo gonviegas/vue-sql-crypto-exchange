@@ -110,15 +110,17 @@ if ($received_data->action == "admin_fetchAllNews") {
     echo json_encode($data);
 }
 
-//ADMIN - INSERT 
+//ADMIN - WALLET
+
 if($received_data->action == "admin_insertStoreWallet")
 {
     $data = array(
         ':currency' => $received_data->currency,
-        ':balance' => $received_data->balance
+        ':balance' => $received_data->balance,
+        ':fee' => $received_data->fee
     );
 
- $sql = "INSERT INTO store_wallet (currency, balance, fee, usd, eur) VALUES (:currency, :balance, 1, 0, 0)";
+ $sql = "INSERT INTO store_wallet (currency, balance, fee, usd, eur) VALUES (:currency, :balance, :fee, 0, 0)";
 
  $stmt = conn()->prepare($sql);
  $stmt->execute($data);
@@ -126,23 +128,52 @@ if($received_data->action == "admin_insertStoreWallet")
  $output = array('message' => 'Data Inserted');
 
  echo json_encode($output);
+
 }
 
-if($received_data->action == "admin_insertCustomer")
+if($received_data->action == "admin_fetchSingleStoreWallet")
 {
-    $data = array(
-    ':first_name' => $received_data->first_name,
-    ':last_name' => $received_data->last_name
-    );
+ $sql = "SELECT * FROM store_wallet WHERE id = '".$received_data->id."'";
 
-    $sql = " INSERT INTO customer (first_name, last_name) VALUES (:first_name, :last_name)";
+ $stmt = conn()->prepare($sql);
+ $stmt->execute();
 
-    $stmt = conn()->prepare($sql);
-    $stmt->execute($data);
+ $result = $stmt->fetchAll();
+    
 
-    $output = array( 'message' => 'Data Inserted');
+ foreach($result as $row)
+ {
+  $data['id'] = $row['id'];
+  $data['currency'] = $row['currency'];
+  $data['balance'] = $row['balance'];
+  $data['fee'] = $row['fee'];
+ }
 
-    echo json_encode($output);
+ echo json_encode($data);
+}
+
+if($received_data->action == 'upd')
+{
+ $data = array(
+  ':first_name' => $received_data->firstName,
+  ':last_name' => $received_data->lastName,
+  ':id'   => $received_data->hiddenId
+ );
+
+ $query = "
+ UPDATE tbl_sample 
+ SET first_name = :first_name, 
+ last_name = :last_name 
+ WHERE id = :id
+ ";
+
+ $statement = $connect->prepare($query);
+
+ $statement->execute($data);
+
+ $output = array(
+  'message' => 'Data Updated'
+ );
 }
 
 //USER - SIGNUP

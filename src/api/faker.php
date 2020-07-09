@@ -39,7 +39,7 @@ for ($i=0; $i < 10; $i++) {
     $stmt = conn()->prepare($sql);
     $stmt->execute([
         $faker->words($nb = 8, $asText = true), 
-        $faker->text($maxNbChars = 100), 
+        $faker->text($maxNbChars = 600), 
         $faker->date
     ]);
 }
