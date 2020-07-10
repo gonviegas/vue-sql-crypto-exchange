@@ -1,16 +1,13 @@
 <template>
   <div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class="row">
-          <div class="col-md-6">
-            <h3 class="panel-title">Store Wallet</h3>
-          </div>
-        </div>
+    <div class="container-xxl">
+      <h3 class="panel-title">Sample Data</h3>
+
+      <div class="col-md-8" align="right">
+        <input type="button" class="btn btn-success btn-xs" @click="openModel" value="Add" />
       </div>
-    </div>
-    <div class="panel-body">
-      <div class="table-responsive">
+
+      <div class="table-responsive-xxl">
         <table class="table table-bordered table-striped">
           <tr>
             <th>Id</th>
@@ -23,8 +20,62 @@
             <td>{{ row.title }}</td>
             <td>{{ row.body }}</td>
             <td>{{ row.date }}</td>
+            <td>
+              <button
+                type="button"
+                name="edit"
+                class="btn btn-primary btn-xs edit"
+                @click="fetchData(row.id)"
+              >Edit</button>
+            </td>
+            <td>
+              <button
+                type="button"
+                name="delete"
+                class="btn btn-danger btn-xs delete"
+                @click="deleteData(row.id)"
+              >Delete</button>
+            </td>
           </tr>
         </table>
+        <div v-if="myModel">
+          <transition name="model">
+            <div class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" @click="myModel = false">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <h4 class="modal-title">{{ dynamicTitle }}</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label>title</label>
+                        <input type="text" class="form-control" v-model="title" />
+                      </div>
+                      <div class="form-group">
+                        <label>body</label>
+                        <input type="text" class="form-control" v-model="body" />
+                      </div>
+                      <br />
+                      <div align="center">
+                        <input type="hidden" v-model="hiddenId" />
+                        <input
+                          type="button"
+                          class="btn btn-success btn-xs"
+                          v-model="actionButton"
+                          @click="submitData"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition>
+        </div>
       </div>
     </div>
   </div>
@@ -38,10 +89,16 @@ export default {
   data() {
     return {
       allData: "",
-      filter: ""
+      filter: "",
+      myModel: false,
+      actionButton: "Insert",
+      dynamicTitle: "Add Data",
+      hiddenId: "",
+      title: "",
+      body: "",
+      date: ""
     };
   },
-
   methods: {
     fetchAll() {
       axios({
@@ -50,14 +107,96 @@ export default {
         data: {
           action: "admin_fetchAllNews"
         }
-      })
-        .then(res => {
-          this.allData = res.data;
-        })
-
-        .catch(err => {
-          console.log("Network Error", err);
+      }).then(res => {
+        this.allData = res.data;
+      });
+    },
+    openModel() {
+      this.title = "",
+      this.body = "",
+      this.actionButton = "Insert";
+      this.dynamicTitle = "Add Data";
+      this.myModel = true;
+    },
+    submitData() {
+      if (
+        this.title != "" &&
+        this.body != ""
+      ) {
+        if (this.actionButton == "Insert") {
+          axios({
+            method: "post",
+            url: this.$axios_url,
+            data: {
+            action: "admin_insertNews",
+            title: this.title,
+            body: this.body,
+            date: this.date,
+            }
+          }).then(res => {
+            this.myModel = false;
+            this.fetchAll();
+            alert(res.data.message);
+            this.title = "";
+            this.body = "";
+            this.date = ""
+          });
+        }
+        if (this.actionButton == "Update") {
+          axios({
+            method: "post",
+            url: this.$axios_url,
+            data: {
+              action: "admin_updateNews",
+              title: this.title,
+              body: this.body,
+              hiddenId: this.hiddenId
+            }
+          }).then(res => {
+            this.myModel = false;
+            this.title = "";
+            this.body = "";
+            this.hiddenId = "";
+            this.fetchAll();
+            alert(res.data.message);
+          });
+        }
+      } else {
+        alert("Fill All Field");
+      }
+    },
+    fetchData(id) {
+      axios({
+        method: "post",
+        url: this.$axios_url,
+        data: {
+          action: "admin_fetchSingleNews",
+          id: id
+        }
+      }).then(res => {
+        this.title = res.data.title;
+        this.body = res.data.body;
+        this.date = res.data.date;
+        this.hiddenId = res.data.id;
+        this.myModel = true;
+        this.actionButton = "Update";
+        this.dynamicTitle = "Edit Data";
+      });
+    },
+    deleteData(id) {
+      if (confirm("Are you sure you want to remove this data?")) {
+        axios({
+          method: "post",
+          url: this.$axios_url,
+          data: {
+            action: "admin_deleteNews",
+            id: id
+          }
+        }).then(res => {
+          this.fetchAll();
+          alert(res.data.message);
         });
+      }
     }
   },
   filters: {
@@ -78,4 +217,25 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.panel {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+</style>

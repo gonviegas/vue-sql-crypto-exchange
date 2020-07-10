@@ -1,98 +1,84 @@
 <template>
   <div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class="row">
-          <div class="col-md-6">
-            <h3 class="panel-title">Sample Data</h3>
-          </div>
-          <div class="col-md-6" align="right">
-            <input
-              type="button"
-              class="btn btn-success btn-xs"
-              @click="openModel"
-              value="Add"
-            />
-          </div>
-        </div>
+    <div class="container-xxl">
+      <h3 class="panel-title">Sample Data</h3>
+
+      <div class="col-md-8" align="right">
+        <input type="button" class="btn btn-success btn-xs" @click="openModel" value="Add" />
       </div>
-      <div class="panel-body">
-        <div class="table-responsive">
-          <table class="table table-bordered table-striped">
-            <tr>
+
+      <div class="table-responsive-xxl">
+        <table class="table table-bordered table-striped">
+          <tr>
               <th>customer_id</th>
               <th>currency</th>
               <th>balance</th>
-              <td>
-                <button
-                  type="button"
-                  name="edit"
-                  class="btn btn-primary btn-xs edit"
-                  @click="fetchData(row.id)"
-                >
-                  Edit
-                </button>
-              </td>
-              <td>
-                <button
-                  type="button"
-                  name="delete"
-                  class="btn btn-danger btn-xs delete"
-                  @click="deleteData(row.id)"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-    <div v-if="myModel">
-      <transition name="model">
-        <div class="modal-mask">
-          <div class="modal-wrapper">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" @click="myModel = false">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                  <h4 class="modal-title">{{ dynamicTitle }}</h4>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <label>Enter First Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="first_name"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label>Enter Last Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="last_name"
-                    />
-                  </div>
-                  <br />
-                  <div align="center">
-                    <input type="hidden" />
-                    <input
-                      type="button"
-                      class="btn btn-success btn-xs"
-                      v-model="actionButton"
-                      @click="submitData"
-                    />
+              </tr>
+          <tr v-for="row in allData" :key="row.id">
+            <td>{{ row.customer_id }}</td>
+            <td>{{ row.currency }}</td>
+            <td>{{ row.balance }}</td>
+            <td>
+              <button
+                type="button"
+                name="edit"
+                class="btn btn-primary btn-xs edit"
+                @click="fetchData(row.id)"
+              >Edit</button>
+            </td>
+            <td>
+              <button
+                type="button"
+                name="delete"
+                class="btn btn-danger btn-xs delete"
+                @click="deleteData(row.id)"
+              >Delete</button>
+            </td>
+          </tr>
+        </table>
+        <div v-if="myModel">
+          <transition name="model">
+            <div class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" @click="myModel = false">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <h4 class="modal-title">{{ dynamicTitle }}</h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label>customer_id</label>
+                        <input type="text" class="form-control" v-model="customer_id" />
+                      </div>
+                      <div class="form-group">
+                        <label>currency</label>
+                        <input type="text" class="form-control" v-model="currency" />
+                      </div>
+                      <div class="form-group">
+                        <label>balance</label>
+                        <input type="text" class="form-control" v-model="balance" />
+                      </div>
+                      <br />
+                      <div align="center">
+                        <input type="hidden" v-model="hiddenId" />
+                        <input
+                          type="button"
+                          class="btn btn-success btn-xs"
+                          v-model="actionButton"
+                          @click="submitData"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </transition>
         </div>
-      </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -108,10 +94,13 @@ export default {
       filter: "",
       myModel: false,
       actionButton: "Insert",
-      dynamicTitle: "Add Data"
+      dynamicTitle: "Add Data",
+      hiddenId: "",
+      customer_id: "",
+      currency: "",
+      balance: ""
     };
   },
-
   methods: {
     fetchAll() {
       axios({
@@ -120,21 +109,96 @@ export default {
         data: {
           action: "staff_fetchAllWallet"
         }
-      })
-        .then(res => {
-          this.allData = res.data;
-        })
-
-        .catch(err => {
-          console.log("Network Error", err);
-        });
+      }).then(res => {
+        this.allData = res.data;
+      });
     },
     openModel() {
-      this.first_name = "";
-      this.last_name = "";
+      this.customer_id = "",
+      this.currency = "",
       this.actionButton = "Insert";
       this.dynamicTitle = "Add Data";
       this.myModel = true;
+    },
+    submitData() {
+      if (
+        this.customer_id != "" &&
+        this.currency != "" && this.balance != ""
+      ) {
+        if (this.actionButton == "Insert") {
+          axios({
+            method: "post",
+            url: this.$axios_url,
+            data: {
+            action: "admin_insertWallet",
+            customer_id: this.customer_id,
+            currency: this.currency,
+            balance: this.balance,
+            }
+          }).then(res => {
+            this.myModel = false;
+            this.fetchAll();
+            alert(res.data.message);
+            this.customer_id = "";
+            this.currency = "";
+            this.balance = ""
+          });
+        }
+        if (this.actionButton == "Update") {
+          axios({
+            method: "post",
+            url: this.$axios_url,
+            data: {
+              action: "admin_updateWallet",
+              balance: this.balance,
+              currency: this.currency,
+              hiddenId: this.hiddenId
+            }
+          }).then(res => {
+            this.myModel = false;
+            this.balance = "";
+            this.currency = "";
+            this.hiddenId = "";
+            this.fetchAll();
+            alert(res.data.message);
+          });
+        }
+      } else {
+        alert("Fill All Field");
+      }
+    },
+    fetchData(id) {
+      axios({
+        method: "post",
+        url: this.$axios_url,
+        data: {
+          action: "admin_fetchSingleWallet",
+          id: id
+        }
+      }).then(res => {
+        this.customer_id = res.data.customer_id;
+        this.currency = res.data.currency;
+        this.balance = res.data.balance;
+        this.hiddenId = res.data.id;
+        this.myModel = true;
+        this.actionButton = "Update";
+        this.dynamicTitle = "Edit Data";
+      });
+    },
+    deleteData(id) {
+      if (confirm("Are you sure you want to remove this data?")) {
+        axios({
+          method: "post",
+          url: this.$axios_url,
+          data: {
+            action: "admin_deleteWallet",
+            id: id
+          }
+        }).then(res => {
+          this.fetchAll();
+          alert(res.data.message);
+        });
+      }
     }
   },
   filters: {
@@ -155,4 +219,25 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.panel {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+</style>

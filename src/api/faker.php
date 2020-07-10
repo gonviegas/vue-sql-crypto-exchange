@@ -45,9 +45,7 @@ for ($i=0; $i < 10; $i++) {
 }
 
 for ($i=0; $i < 10; $i++) {
-    $sql = "INSERT INTO  staff(first_name, last_name, username, email, image, level, active, password, token) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $token_image = sha1(bin2hex($faker->date('U')));
+    $sql = "INSERT INTO staff(first_name, last_name, username, email, level, active, password, token) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = conn()->prepare($sql);
     $stmt->execute([
@@ -55,11 +53,10 @@ for ($i=0; $i < 10; $i++) {
         $faker->lastName, 
         $faker->userName,
         $faker->email,
-        $token_image,
         $faker->numberBetween($min = 0, $max = 1),
         $faker->numberBetween($min = 0, $max = 1),
         password_hash($faker->password, PASSWORD_BCRYPT),
-        $token_image
+        sha1(bin2hex($timestamp))
     ]);
 }
 
@@ -77,21 +74,6 @@ for ($i=0; $i < 5; $i++) {
 }
 
 for ($i=0; $i < 40; $i++) {
-    $sql = "INSERT INTO transfer(date, from_address, from_currency, from_volume, to_address, to_currency, to_volume) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = conn()->prepare($sql);
-    $stmt->execute([
-        $faker->date,
-        password_hash($faker->numberBetween($min = 1, $max = 20), PASSWORD_BCRYPT),
-        $currency[$faker->numberBetween($min = 1, $max = 5)],
-        $faker->randomFloat($nbMaxDecimals = 8, $min = 1, $max = 1000000),
-        password_hash($faker->numberBetween($min = 1, $max = 20), PASSWORD_BCRYPT),
-        $currency[$faker->numberBetween($min = 1, $max = 5)],
-        $faker->randomFloat($nbMaxDecimals = 8, $min = 1, $max = 1000000)
-    ]);
-}
-
-for ($i=0; $i < 40; $i++) {
     $sql = "INSERT INTO wallet(customer_id, currency, balance, usd, eur, value) VALUES ( ?, ?, ?, ?, ?, ?)";
 
     $stmt = conn()->prepare($sql);
@@ -104,3 +86,18 @@ for ($i=0; $i < 40; $i++) {
         0
     ]);
 }
+
+// for ($i=0; $i < 40; $i++) {
+//     $sql = "INSERT INTO transfer(date, from_address, from_currency, from_volume, to_address, to_currency, to_volume) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+
+//     $stmt = conn()->prepare($sql);
+//     $stmt->execute([
+//         $faker->date,
+//         password_hash($faker->numberBetween($min = 1, $max = 20), PASSWORD_BCRYPT),
+//         $currency[$faker->numberBetween($min = 1, $max = 5)],
+//         $faker->randomFloat($nbMaxDecimals = 8, $min = 1, $max = 1000000),
+//         password_hash($faker->numberBetween($min = 1, $max = 20), PASSWORD_BCRYPT),
+//         $currency[$faker->numberBetween($min = 1, $max = 5)],
+//         $faker->randomFloat($nbMaxDecimals = 8, $min = 1, $max = 1000000)
+//     ]);
+// }

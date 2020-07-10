@@ -65,11 +65,6 @@ const routes = [
         component: () => import("../components/user/UserTrade.vue")
       },
       {
-        path: "/user/trade-history",
-        name: "UserTradeHistory",
-        component: () => import("../components/user/UserTradeHistory.vue")
-      },
-      {
         path: "/user/wallet",
         name: "UserWallet",
         component: () => import("../components/user/UserWallet.vue")
@@ -128,12 +123,6 @@ const routes = [
         component: () =>
           import("../components/staff/backoffice/AdminStoreWallet.vue")
       },
-      {
-        path: "/admin/transfers",
-        name: "AdminTransfers",
-        component: () =>
-          import("../components/staff/backoffice/AdminTransfers.vue")
-      }
     ]
   },
   {
@@ -165,12 +154,6 @@ const routes = [
         name: "FrontStoreWallet",
         component: () =>
           import("../components/staff/frontoffice/FrontStoreWallet.vue")
-      },
-      {
-        path: "/front/transfers",
-        name: "FrontTransfers",
-        component: () =>
-          import("../components/staff/frontoffice/FrontTransfers.vue")
       }
     ]
   }

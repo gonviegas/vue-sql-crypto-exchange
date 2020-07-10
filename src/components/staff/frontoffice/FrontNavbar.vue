@@ -13,10 +13,6 @@
         <li>Wallets</li>
       </router-link>
 
-      <router-link class="" to="/front/transfers">
-        <li>Transfers</li>
-      </router-link>
-
       <router-link class="" to="/front/store-wallet">
         <li>Store Wallet</li>
       </router-link>

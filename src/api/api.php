@@ -109,9 +109,9 @@ if ($received_data->action == "admin_fetchAllNews") {
     
     echo json_encode($data);
 }
-
-//ADMIN - WALLET
-
+/////////////////////////////////
+/////////////ADMIN - WALLET
+/////////////////////////////////
 if($received_data->action == "admin_insertStoreWallet")
 {
     $data = array(
@@ -120,60 +120,381 @@ if($received_data->action == "admin_insertStoreWallet")
         ':fee' => $received_data->fee
     );
 
- $sql = "INSERT INTO store_wallet (currency, balance, fee, usd, eur) VALUES (:currency, :balance, :fee, 0, 0)";
+    $sql = "INSERT INTO store_wallet (currency, balance, fee, usd, eur) VALUES (:currency, :balance, :fee, 0, 0)";
 
- $stmt = conn()->prepare($sql);
- $stmt->execute($data);
+    $stmt = conn()->prepare($sql);
+    $stmt->execute($data);
 
- $output = array('message' => 'Data Inserted');
+    $output = array('message' => 'Data Inserted');
 
- echo json_encode($output);
+    echo json_encode($output);
 
 }
 
 if($received_data->action == "admin_fetchSingleStoreWallet")
 {
- $sql = "SELECT * FROM store_wallet WHERE id = '".$received_data->id."'";
+    $sql = "SELECT * FROM store_wallet WHERE id = '".$received_data->id."'";
 
- $stmt = conn()->prepare($sql);
- $stmt->execute();
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
 
- $result = $stmt->fetchAll();
-    
+    $result = $stmt->fetchAll();
+        
 
- foreach($result as $row)
- {
-  $data['id'] = $row['id'];
-  $data['currency'] = $row['currency'];
-  $data['balance'] = $row['balance'];
-  $data['fee'] = $row['fee'];
- }
+    foreach($result as $row)
+    {
+    $data['id'] = $row['id'];
+    $data['currency'] = $row['currency'];
+    $data['balance'] = $row['balance'];
+    $data['fee'] = $row['fee'];
+    }
 
- echo json_encode($data);
+    echo json_encode($data);
 }
 
-if($received_data->action == 'upd')
+if($received_data->action == 'admin_deleteStoreWallet') {
+    $sql = "DELETE FROM store_wallet WHERE id = '".$received_data->id."'";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+
+    $output = array(
+    'message' => 'Data Deleted'
+    );
+
+ echo json_encode($output);
+}
+
+/////////////////////////////////
+/////////////ADMIN - Customers
+/////////////////////////////////
+
+if($received_data->action == "admin_insertCustomer")
 {
- $data = array(
-  ':first_name' => $received_data->firstName,
-  ':last_name' => $received_data->lastName,
-  ':id'   => $received_data->hiddenId
- );
+    $data = array(
+        ':email' => $received_data->email,
+        ':first_name' => $received_data->first_name,
+        ':last_name' => $received_data->last_name,
+        ':verified' => $received_data->verified,
+        ':status' => $received_data->status,
+        ':password' => password_hash($received_data->password, PASSWORD_BCRYPT),
+        ':token' => sha1(bin2hex(date('U'))),
+        ':timestamp' => date('U')
+    );
 
- $query = "
- UPDATE tbl_sample 
- SET first_name = :first_name, 
- last_name = :last_name 
- WHERE id = :id
- ";
+    $sql = "INSERT INTO customer(email, first_name, last_name, verified, status, password, token, timestamp) VALUES (:email, :first_name, :last_name,:verified, :status, :password, :token, :timestamp)";
 
- $statement = $connect->prepare($query);
+    $stmt = conn()->prepare($sql);
+    $stmt->execute($data);
 
- $statement->execute($data);
+    $output = array('message' => 'Data Inserted');
 
- $output = array(
-  'message' => 'Data Updated'
- );
+    echo json_encode($output);
+
+}
+
+if($received_data->action == 'admin_updateCustomer')
+{
+    $data = array(
+        ':email' => $received_data->email,
+        ':first_name' => $received_data->first_name,
+        ':last_name' => $received_data->last_name,
+        ':verified' => $received_data->verified,
+        ':status' => $received_data->status,
+        ':password' => password_hash($received_data->password, PASSWORD_BCRYPT),
+        ':id'   => $received_data->hiddenId
+    );
+
+    $sql = "UPDATE customer SET email = :email, first_name = :first_name, last_name = :last_name, verified = :verified, status = :status, password = :password WHERE id = :id";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute($data);
+
+    $output = array(
+    'message' => 'Data Updated'
+    );
+    echo json_encode($output);
+}
+
+if($received_data->action == "admin_fetchSingleCustomer")
+{
+    $sql = "SELECT * FROM customer WHERE id = '".$received_data->id."'";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+
+    $result = $stmt->fetchAll();
+        
+
+    foreach($result as $row)
+    {
+    $data['id'] = $row['id'];
+    $data['email'] = $row['email'];
+    $data['first_name'] = $row['first_name'];
+    $data['last_name'] = $row['last_name'];
+    $data['verified'] = $row['verified'];
+    $data['status'] = $row['status'];
+    $data['password'] = $row['password'];
+    $data['token'] = $row['token'];
+    $data['timestamp'] = $row['timestamp'];
+    }
+
+    echo json_encode($data);
+}
+
+if($received_data->action == 'admin_deleteCustomer') {
+    $sql = "DELETE FROM customer WHERE id = '".$received_data->id."'";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+
+    $output = array(
+    'message' => 'Data Deleted'
+    );
+
+ echo json_encode($output);
+}
+
+/////////////////////////////////
+/////////////ADMIN - Staff
+/////////////////////////////////
+
+if($received_data->action == "admin_insertStaff")
+{
+    $data = array(
+        ':first_name' => $received_data->first_name,
+        ':last_name' => $received_data->last_name,
+        ':username' => $received_data->username,
+        ':email' => $received_data->email,
+        ':level' => $received_data->level,
+        ':active' => $received_data->active,
+        ':password' => password_hash($received_data->password, PASSWORD_BCRYPT),
+        ':token' => sha1(bin2hex(date('U'))),
+    );
+
+    $sql = "INSERT INTO staff(first_name, last_name, username, email, level, active, password, token) VALUES (:first_name, :last_name, :username, :email, :level, :active, :password, :token)";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute($data);
+
+    $output = array('message' => 'Data Inserted');
+
+    echo json_encode($output);
+
+}
+
+if($received_data->action == 'admin_updateStaff')
+{
+    $data = array(
+        ':first_name' => $received_data->first_name,
+        ':last_name' => $received_data->last_name,
+        ':username' => $received_data->username,
+        ':email' => $received_data->email,
+        ':level' => $received_data->level,
+        ':active' => $received_data->active,
+        ':password' => password_hash($received_data->password, PASSWORD_BCRYPT),
+        ':id'   => $received_data->hiddenId
+    );
+
+    $sql = "UPDATE staff SET first_name = :first_name, last_name = :last_name, username = :username, email = :email,  level = :level, active = :active, password = :password WHERE id = :id";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute($data);
+
+    $output = array(
+    'message' => 'Data Updated'
+    );
+    echo json_encode($output);
+}
+
+if($received_data->action == "admin_fetchSingleStaff")
+{
+    $sql = "SELECT * FROM staff WHERE id = '".$received_data->id."'";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+
+    $result = $stmt->fetchAll();
+        
+
+    foreach($result as $row)
+    {
+    $data['id'] = $row['id'];
+    $data['first_name'] = $row['first_name'];
+    $data['last_name'] = $row['last_name'];
+    $data['username'] = $row['username'];
+    $data['email'] = $row['email'];
+    $data['active'] = $row['active'];
+    $data['level'] = $row['level'];
+    $data['password'] = $row['password'];
+    $data['token'] = $row['token'];
+    }
+
+    echo json_encode($data);
+}
+
+if($received_data->action == 'admin_deleteStaff') {
+    $sql = "DELETE FROM staff WHERE id = '".$received_data->id."'";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+
+    $output = array(
+    'message' => 'Data Deleted'
+    );
+
+ echo json_encode($output);
+}
+
+/////////////////////////////////
+/////////////ADMIN - News
+/////////////////////////////////
+
+if($received_data->action == "admin_insertNews")
+{
+    $data = array(
+        ':title' => $received_data->title,
+        ':body' => $received_data->body,
+        ':date' => date('Y-m-d')
+    );
+
+    $sql = "INSERT INTO news(title, body, date) VALUES (:title, :body, :date)";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute($data);
+
+    $output = array('message' => 'Data Inserted');
+
+    echo json_encode($output);
+
+}
+
+if($received_data->action == 'admin_updateNews')
+{
+    $data = array(
+        ':title' => $received_data->title,
+        ':body' => $received_data->body,
+        ':id'   => $received_data->hiddenId
+    );
+
+    $sql = "UPDATE news SET title = :title, body = :body WHERE id = :id";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute($data);
+
+    $output = array(
+    'message' => 'Data Updated'
+    );
+    echo json_encode($output);
+}
+
+if($received_data->action == "admin_fetchSingleNews")
+{
+    $sql = "SELECT * FROM news WHERE id = '".$received_data->id."'";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+
+    $result = $stmt->fetchAll();
+        
+
+    foreach($result as $row)
+    {
+    $data['id'] = $row['id'];
+    $data['title'] = $row['title'];
+    $data['body'] = $row['body'];
+    }
+
+    echo json_encode($data);
+}
+
+if($received_data->action == 'admin_deleteNews') {
+    $sql = "DELETE FROM news WHERE id = '".$received_data->id."'";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+
+    $output = array(
+    'message' => 'Data Deleted'
+    );
+
+ echo json_encode($output);
+}
+
+/////////////////////////////////
+/////////////ADMIN - Wallet
+/////////////////////////////////
+
+if($received_data->action == "admin_insertWallet")
+{
+    $data = array(
+        ':customer_id' => $received_data->customer_id,
+        ':currency' => $received_data->currency,
+        ':balance' => $received_data->balance
+    );
+
+    $sql = "INSERT INTO wallet(customer_id, currency, balance, usd, eur, value) VALUES (:customer_id, :currency, :balance, 0, 0, 0)";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute($data);
+
+    $output = array('message' => 'Data Inserted');
+
+    echo json_encode($output);
+
+}
+
+if($received_data->action == 'admin_updateWallet')
+{
+    $data = array(
+        ':currency' => $received_data->currency,
+        ':balance' => $received_data->balance,
+        ':id'   => $received_data->hiddenId
+    );
+
+    $sql = "UPDATE wallet SET currency = :currency, balance = :balance  WHERE id = :id";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute($data);
+
+    $output = array(
+    'message' => 'Data Updated'
+    );
+    echo json_encode($output);
+}
+
+if($received_data->action == "admin_fetchSingleWallet")
+{
+    $sql = "SELECT * FROM wallet WHERE id = '".$received_data->id."'";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+
+    $result = $stmt->fetchAll();
+        
+
+    foreach($result as $row)
+    {
+    $data['id'] = $row['id'];
+    $data['customer_id'] = $row['customer_id'];
+    $data['currency'] = $row['currency'];
+    $data['balance'] = $row['balance'];
+    }
+
+    echo json_encode($data);
+}
+
+if($received_data->action == 'admin_deleteWallet') {
+    $sql = "DELETE FROM wallet WHERE id = '".$received_data->id."'";
+
+    $stmt = conn()->prepare($sql);
+    $stmt->execute();
+
+    $output = array(
+    'message' => 'Data Deleted'
+    );
+
+ echo json_encode($output);
 }
 
 //USER - SIGNUP
