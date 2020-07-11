@@ -2,8 +2,7 @@
   <div id="nav-bar">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
       <div class="container">
-        <router-link class="nav-link" to="/">
-          <img src="http://placehold.it/150x50?text=Logo" alt="" />
+        <router-link class="nav-link" to="/">CRYPTO EXCHANGE
         </router-link>
         <button
           class="navbar-toggler"
@@ -61,4 +60,6 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+
+</style>

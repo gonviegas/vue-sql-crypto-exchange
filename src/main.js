@@ -11,10 +11,19 @@ Object.defineProperty(Vue.prototype, "$axios_url", {
   // value: "api/api.php"
 });
 
+Object.defineProperty(Vue.prototype, "$axios_url_faker", {
+  value: "http://localhost/api/faker.php"
+  // value: "api/faker.php"
+});
+
 Object.defineProperty(Vue.prototype, "$axios_url_news_market_api", {
   value: "http://localhost/api/news_market_api.php"
   // value: "api/news_market_api.php"
 });
+
+localStorage.setItem('admin_session', false);
+localStorage.setItem('user_session', false);
+localStorage.setItem('front_session', false);
 
 Vue.config.productionTip = false;
 

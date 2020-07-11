@@ -17,35 +17,38 @@
           <ul class="navbar-nav">
             <li class="nav-item active"></li>
             <li class="nav-item">
-              <router-link class="nav-bar" to="/front/dashboard">
+              <router-link class="nav-bar" to="/admin/dashboard">
                 <li>Dashboard</li>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-bar" to="/front/customers">
+              <router-link class="nav-bar" to="/admin/customers">
                 <li>Customers</li>
               </router-link>
             </li>
 
             <li class="nav-item">
-              <router-link class="nav-bar" to="/front/wallets">
+              <router-link class="nav-bar" to="/admin/wallets">
                 <li>Wallets</li>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-bar" to="/front/store-wallet">
+              <router-link class="nav-bar" to="/admin/store-wallet">
                 <li>Store Wallet</li>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-bar" to="/front/staff">
+              <router-link class="nav-bar" to="/admin/staff">
                 <li>Staff</li>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-bar" to="/staff">
-                <li>Log Out</li>
+              <router-link class="nav-bar" to="/admin/news">
+                <li>News</li>
               </router-link>
+            </li>
+            <li class="nav-item">
+              <a href="#" v-on:click.prevent="logOut()">Log Out</a>
             </li>
           </ul>
         </div>
@@ -63,11 +66,18 @@
 
 <script>
 export default {
-  name: "FrontNavbar"
+  name: "AdminNavbar",
+  methods: {
+    logOut() {
+      localStorage.setItem("admin_session", false);
+      localStorage.setItem("staff_session", false);
+      this.$router.push("/staff");
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .nav-item {
   text-decoration: none;
   font-family: sans-serif;

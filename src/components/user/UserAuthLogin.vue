@@ -34,7 +34,8 @@ export default {
     return {
       msg: "",
       email: "",
-      password: ""
+      password: "",
+      token: "",
     };
   },
   methods: {
@@ -57,6 +58,9 @@ export default {
             this.resetForm();
             this.msg = res.data.msg;
           } else {
+            localStorage.setItem('user_token', res.data.token);
+            localStorage.setItem('user_email', res.data.email);
+            localStorage.setItem('user_session', true);
             this.$router.push("dashboard");
           }
         })

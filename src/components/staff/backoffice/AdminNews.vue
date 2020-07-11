@@ -48,7 +48,7 @@
                       <button type="button" class="close" @click="myModel = false">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <h4 class="modal-title">{{ dynamicTitle }}</h4>
+                      <h4 class="modal-title col-md-12">{{ dynamicTitle }}</h4>
                     </div>
                     <div class="modal-body">
                       <div class="form-group">
@@ -218,24 +218,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.panel {
-  margin-left: 50px;
-  margin-right: 50px;
-}
-.modal-mask {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: table;
-  transition: opacity 0.3s ease;
-}
 
-.modal-wrapper {
-  display: table-cell;
-  vertical-align: middle;
-}
 </style>

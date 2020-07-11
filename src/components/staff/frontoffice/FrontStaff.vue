@@ -4,13 +4,14 @@
       <div class="panel-heading">
         <div class="row">
           <div class="col-md-6">
-            <h3 class="panel-title">Store Wallet</h3>
+            <div class="container-xxl">
+            <h3 class="panel-title">Staff</h3>
           </div>
         </div>
       </div>
     </div>
     <div class="panel-body">
-      <div class="table-responsive">
+      <div class="table-responsive-xxl">
         <table class="table table-bordered table-striped">
           <tr>
             <th>first_name</th>
@@ -27,7 +28,7 @@
             <td>{{ row.last_name | capitalize }}</td>
             <td>{{ row.username }}</td>
             <td>{{ row.email }}</td>
-            <td>{{ row.level | uppercase }}</td>
+            <td>{{ row.level }}</td>
             <td>{{ row.active }}</td>
             <td>{{ row.password }}</td>
             <td>{{ row.token }}</td>
@@ -35,6 +36,7 @@
         </table>
       </div>
     </div>
+  </div>
   </div>
 </template>
 

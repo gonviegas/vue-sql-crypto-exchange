@@ -1,6 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header('Access-Control-Allow-Headers: Content-Type');
+header('Access-Control-Allow-Headers: *');
 
 function conn() {
     $host = 'localhost';
@@ -48,7 +48,7 @@ function email($to, $subject, $message)
 
     try {
       
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
         $mail->isSMTP();
         $mail->Host       = 'hosting63.serverhs.org';
         $mail->SMTPAuth   = true;

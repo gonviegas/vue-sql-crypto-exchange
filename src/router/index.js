@@ -74,25 +74,25 @@ const routes = [
         name: "UserAccount",
         component: () => import("../components/user/UserAccount.vue")
       }
-    ]
+    ],
+    beforeEnter: (to, from, next) => {
+      if (JSON.parse(localStorage.getItem('user_session')) == false) {
+        next("/user/login");
+      } 
+      else {
+        next();
+      }
+    }
   },
+
   {
     path: "/staff",
     name: "staff",
-    redirect: "/staff/login",
     component: StaffAuth,
-    children: [
-      {
-        path: "login",
-        name: "StaffAuthLogin",
-        component: () => import("../components/staff/StaffAuthLogin.vue")
-      }
-    ]
   },
   {
     path: "/admin/dashboard",
     name: "AdminDashboard",
-    alias: "/admin",
     component: AdminDashboard,
     children: [
       {
@@ -123,12 +123,19 @@ const routes = [
         component: () =>
           import("../components/staff/backoffice/AdminStoreWallet.vue")
       },
-    ]
+    ],
+    beforeEnter: (to, from, next) => {
+      if (JSON.parse(localStorage.getItem('admin_session')) == false) {
+        next("/staff");
+      } 
+      else {
+        next();
+      }
+    }
   },
   {
     path: "/front/dashboard",
     name: "FrontDashboard",
-    alias: "/front/",
     component: FrontDashboard,
     children: [
       {
@@ -155,7 +162,15 @@ const routes = [
         component: () =>
           import("../components/staff/frontoffice/FrontStoreWallet.vue")
       }
-    ]
+    ],
+    beforeEnter: (to, from, next) => {
+      if (JSON.parse(localStorage.getItem('front_session')) == false) {
+        next("/staff");
+      } 
+      else {
+        next();
+      }
+    }
   }
 ];
 

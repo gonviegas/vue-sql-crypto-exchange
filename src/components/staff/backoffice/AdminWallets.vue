@@ -46,7 +46,7 @@
                       <button type="button" class="close" @click="myModel = false">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <h4 class="modal-title">{{ dynamicTitle }}</h4>
+                      <h4 class="modal-title col-md-12">{{ dynamicTitle }}</h4>
                     </div>
                     <div class="modal-body">
                       <div class="form-group">

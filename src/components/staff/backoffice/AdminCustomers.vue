@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container-xxl">
-      <h3 class="panel-title">Sample Data</h3>
+      <h3 class="panel-title">Customers</h3>
 
       <div class="col-md-8" align="right">
         <input
@@ -69,7 +69,7 @@
                   <button type="button" class="close" @click="myModel = false">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title">{{ dynamicTitle }}</h4>
+                  <h4 class="modal-title col-md-12">{{ dynamicTitle }}</h4>
                 </div>
                 <div class="modal-body">
                   <div class="form-group">

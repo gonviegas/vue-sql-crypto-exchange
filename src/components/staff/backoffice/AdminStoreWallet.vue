@@ -8,15 +8,11 @@
           </div>
 
           <div class="col-md-6" align="right">
-            <input
-              type="button"
-              class="btn btn-success btn-xs"
-              @click="openModel"
-              value="Add"
-            />
+            <input type="button" class="btn btn-success btn-xs" @click="openModel" value="Add" />
           </div>
         </div>
       </div>
+
       <div class="panel-body">
         <div class="table-responsive">
           <div class="container">
@@ -40,9 +36,7 @@
                     name="edit"
                     class="btn btn-primary btn-xs edit"
                     @click="fetchData(row.id)"
-                  >
-                    Edit
-                  </button>
+                  >Edit</button>
                 </td>
                 <td>
                   <button
@@ -50,9 +44,7 @@
                     name="delete"
                     class="btn btn-danger btn-xs delete"
                     @click="deleteData(row.id)"
-                  >
-                    Delete
-                  </button>
+                  >Delete</button>
                 </td>
               </tr>
             </table>
@@ -70,16 +62,12 @@
                   <button type="button" class="close" @click="myModel = false">
                     <span aria-hidden="true">&times;</span>
                   </button>
-                  <h4 class="modal-title">{{ dynamicTitle }}</h4>
+                  <h4 class="modal-title col-md-12">{{ dynamicTitle }}</h4>
                 </div>
                 <div class="modal-body">
                   <div class="form-group">
                     <label>Enter Currency</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="currency"
-                    />
+                    <input type="text" class="form-control" v-model="currency" />
                   </div>
                   <div class="form-group">
                     <label>Enter Balance</label>
@@ -124,7 +112,17 @@ export default {
       hiddenId: "",
       currency: "",
       balance: "",
-      fee: ""
+      fee: "",
+      btc_usd: "",
+      btc_eur: "",
+      eth_usd: "",
+      eth_eur: "",
+      xrp_usd: "",
+      xrp_eur: "",
+      xlm_usd: "",
+      xlm_eur: "",
+      dgb_usd: "",
+      dgb_eur: ""
     };
   },
 
@@ -230,6 +228,49 @@ export default {
           alert(res.data.message);
         });
       }
+    },
+    updateCryptoPrices() {
+      axios({
+        method: "post",
+        url: this.$axios_url,
+        data: {
+          action: "updateCryptoPrices",
+          btc_usd: this.btc_usd,
+          btc_eur: this.btc_eur,
+          eth_usd: this.eth_usd,
+          eth_eur: this.eth_eur,
+          xrp_usd: this.xrp_usd,
+          xrp_eur: this.xrp_eur,
+          xlm_usd: this.xlm_usd,
+          xlm_eur: this.xlm_eur,
+          dgb_usd: this.dgb_usd,
+          dgb_eur: this.dgb_eur
+        }
+      });
+    },
+    getCrypto() {
+      axios({
+        method: "get",
+        url:
+          "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,XRP,XLM,DGB&tsyms=USD,EUR"
+      })
+        .then(res => {
+          this.btc_usd = res.data.BTC.USD;
+          this.btc_eur = res.data.BTC.EUR;
+          this.eth_usd = res.data.ETH.USD;
+          this.eth_eur = res.data.ETH.EUR;
+          this.xrp_usd = res.data.XRP.USD;
+          this.xrp_eur = res.data.XRP.EUR;
+          this.xlm_usd = res.data.XLM.USD;
+          this.xlm_eur = res.data.XLM.EUR;
+          this.dgb_usd = res.data.DGB.USD;
+          this.dgb_eur = res.data.DGB.EUR;
+          this.updateCryptoPrices();
+        })
+
+        .catch(err => {
+          console.log("Network Error", err);
+        });
     }
   },
   filters: {
@@ -245,6 +286,7 @@ export default {
     }
   },
   beforeMount() {
+    this.getCrypto();
     this.fetchAll();
   }
 };

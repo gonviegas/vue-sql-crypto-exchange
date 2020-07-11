@@ -4,13 +4,14 @@
       <div class="panel-heading">
         <div class="row">
           <div class="col-md-6">
-            <h3 class="panel-title">Store Wallet</h3>
+            <div class="container-xxl">
+            <h3 class="panel-title">Customers</h3>
           </div>
         </div>
       </div>
     </div>
     <div class="panel-body">
-      <div class="table-responsive">
+      <div class="table-responsive-xxl">
         <table class="table table-bordered table-striped">
           <tr>
             <th>id</th>
@@ -35,6 +36,7 @@
             <td>{{ row.timestamp }}</td>
           </tr>
         </table>
+      </div>
       </div>
     </div>
   </div>
