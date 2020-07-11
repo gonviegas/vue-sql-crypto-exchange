@@ -19,7 +19,7 @@ export default {
     Faker() {
       axios({
         method: "post",
-        url: "api/faker.php",
+        url: "http://localhost/api/faker.php",
       }).catch(res => {
         res.data = "FAKER ACTIVATED";
         alert(res.data);
