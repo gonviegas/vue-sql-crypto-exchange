@@ -7,15 +7,15 @@
             <h3 class="panel-title">Store Wallet</h3>
           </div>
 
-          <div class="col-md-6" align="right">
-            <input type="button" class="btn btn-success btn-xs" @click="openModel" value="Add" />
-          </div>
+          <div class="col-md-12" align="right">
+        <button type="button" class="btn btn-info" @click="openModel" value="Add">Add</button>
+      </div>
         </div>
       </div>
 
       <div class="panel-body">
         <div class="table-responsive">
-          <div class="container">
+          <div class="container-xl">
             <table class="table table-bordered table-striped">
               <tr>
                 <th>Currency</th>

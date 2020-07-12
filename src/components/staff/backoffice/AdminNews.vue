@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="container-xxl">
-      <h3 class="panel-title">Sample Data</h3>
+      <h3 class="panel-title">News</h3>
 
-      <div class="col-md-8" align="right">
-        <input type="button" class="btn btn-success btn-xs" @click="openModel" value="Add" />
+      <div class="col-md-12" align="right">
+        <button type="button" class="btn btn-info" @click="openModel" value="Add">Add</button>
       </div>
 
       <div class="table-responsive-xxl">

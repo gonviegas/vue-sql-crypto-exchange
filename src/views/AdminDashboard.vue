@@ -1,31 +1,20 @@
 <template>
   <div>
     <AdminNavbar />
-    <input type="submit" value="ACTIVATE FAKER" v-on:click.prevent="Faker()"/>
     <router-view />
   </div>
 </template>
 
 <script>
 import AdminNavbar from "@/components/staff/backoffice/AdminNavbar.vue";
-import axios from "axios";
+
 
 export default {
   name: "AdminDashboard",
   components: {
     AdminNavbar,
   },
-  methods: {
-    Faker() {
-      axios({
-        method: "post",
-        url: "http://localhost/api/faker.php",
-      }).catch(res => {
-        res.data = "FAKER ACTIVATED";
-        alert(res.data);
-      });
-    },
-  }
+  
 };
 </script>
 

@@ -716,35 +716,34 @@ if ($received_data->action == "user_login") {
 // User Fetch Wallet 
 
 if ($received_data->action == "user_fetchAllWallet") {
-    session_start();
-    if (isset($_SESSION['loggedin'])) {
 
-        $email = $_SESSION['email'];
-        $token = $_SESSION['token'];
+    $email = $received_data->email;
+    $btc_usd = $received_data->btc_usd;
+    $btc_eur = $received_data->btc_eur;
 
-        $sql = "SELECT id FROM customer WHERE email = ?, token = ?";
+    $sql = "SELECT id, email FROM customer WHERE email = ?";
 
+    $stmt = conn()->prepare($sql);
+    if ($stmt->execute([$email])) {
+        $r = $stmt->fetch();
+        $stmt = null;
+        
+        $id = $r['id'];
+
+        
+        $sql = "SELECT * FROM wallet WHERE customer_id = ?";
+        
         $stmt = conn()->prepare($sql);
-        if ($stmt->execute([$email, $token])) {
-            $r = $stmt->fetch();
-            $stmt = null;
-            
-            $sql = "SELECT * FROM wallet WHERE customer_id = ?";
-            
-            $stmt = conn()->prepare($sql);
-            $stmt->execute([$r['id']]);
-            
-            
-            while ( $row = $stmt->fetch())  {
-                $data[]=$row;
-            }
-            
-            $stmt = null;
-            
-            echo json_encode($data);
-
+        $stmt->execute([$id]);
+        
+        while ( $row = $stmt->fetch())  {
+            $data[]=$row;
         }
-    } else {
-        $data['msg']= "Session Expired. Please log in.";
+        
+        $stmt = null;
+        
+        echo json_encode($data);
+        
     }
+
 }

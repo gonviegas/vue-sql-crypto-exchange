@@ -1,5 +1,17 @@
 <template>
   <div>
+    <table class="table">
+      <thead>
+          <tr>
+              <th v-for="(column, index) in columns" :key="index"> {{column}}</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr v-for="(item, index) in items" :key="index">
+              <td v-for="(column, indexColumn) in columns" :key="indexColumn">{{item[column]}}</td>
+          </tr>
+      </tbody>
+    </table>   
   </div>
 </template>
 
@@ -10,28 +22,22 @@ export default {
   name: "Market",
   data() {
     return {
-      data: ""
+      data: "",
+      btc_usd: '',
+      items: '',
+      columns: [ 'currency','USD', 'EUR'],
     };
   },
   methods: {
     getCrypto() {
       axios({
-        method: "post",
-        url: this.$axios_url_news_market_api,
-        data: {
-          action: "market,EUR"
-        }
+        method: "get",
+        url:
+          "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,XRP,XLM,DGB&tsyms=USD,EUR"
       })
         .then(res => {
-          this.data = res.data;
-          console.log(res.data);
-          // this.rows = JSON.stringify(res.data);
-          // this.rows = this.data;
+          this.items = res.data;
         })
-
-        .catch(err => {
-          console.log("Network Error", err);
-        });
     }
   },
   beforeMount() {

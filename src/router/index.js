@@ -123,6 +123,12 @@ const routes = [
         component: () =>
           import("../components/staff/backoffice/AdminStoreWallet.vue")
       },
+      {
+        path: "/admin/faker",
+        name: "AdminFaker",
+        component: () =>
+          import("../components/staff/backoffice/AdminFaker.vue")
+      },
     ],
     beforeEnter: (to, from, next) => {
       if (JSON.parse(localStorage.getItem('admin_session')) == false) {
@@ -175,7 +181,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  // mode: "history",
+  mode: "history",
   // base: process.env.BASE_URL,
   routes
 });

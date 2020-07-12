@@ -1,19 +1,24 @@
 <template>
   <div>
-    <div class="container-xxl">
-      <h3 class="panel-title">Customers</h3>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col">
+            <h3 class="panel-title">Customers</h3>
+          </div>
 
-      <div class="col-md-8" align="right">
-        <input
-          type="button"
-          class="btn btn-success btn-xs"
-          @click="openModel"
-          value="Add"
-        />
+          <div class="col-md-16" align="right">
+        <button type="button" class="btn btn-info" @click="openModel" value="Add">Add</button>
+      </div>
+        </div>
       </div>
 
-      <div class="table-responsive-xxl">
-        <table class="table table-bordered table-striped">
+      <div class="panel-body">
+        <div class="container-sm">
+        <div class="table-responsive-sm ">
+
+          
+        <table class="table table-bordered table-striped .w-auto">
           <tr>
             <th>id</th>
             <th>email</th>
@@ -57,6 +62,9 @@
             </td>
           </tr>
         </table>
+        
+    </div>
+    </div>
       </div>
     </div>
     <div v-if="myModel">
@@ -180,7 +188,7 @@ export default {
       this.myModel = true;
     },
     submitData() {
-      if (this.email != "" && this.first_name != "" && this.last_name != "" && this.verified != "" && this.status != "" && this.password != "") {
+      if (this.email != "" && this.first_name != "" && this.last_name != "" && this.verified != "" && this.status != "") {
         if (this.actionButton == "Insert") {
           axios({
             method: "post",
@@ -251,7 +259,7 @@ export default {
         this.last_name = res.data.last_name;
         this.verified = res.data.verified;
         this.status = res.data.status;
-        this.password = res.data.password;
+        this.password = "";
         this.token = res.data.token;
         this.timestamp = res.data.timestamp;
         this.hiddenId = res.data.id;

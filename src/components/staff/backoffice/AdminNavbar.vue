@@ -48,6 +48,11 @@
               </router-link>
             </li>
             <li class="nav-item">
+              <router-link class="nav-bar" to="/admin/faker">
+                <li>Faker</li>
+              </router-link>
+            </li>
+            <li class="nav-item">
               <a href="#" v-on:click.prevent="logOut()">Log Out</a>
             </li>
           </ul>
