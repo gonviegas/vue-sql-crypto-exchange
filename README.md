@@ -1,4 +1,4 @@
-# crypto-exchange
+# crypto-exchange (work in progress)
 
 ## Project setup
 ```
