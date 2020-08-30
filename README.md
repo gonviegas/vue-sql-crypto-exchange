@@ -1,5 +1,5 @@
 # Crypto Exchange simulation (BACKEND) 
-## (work in progress)
+(work in progress)
 
 ## Project setup
 ```
