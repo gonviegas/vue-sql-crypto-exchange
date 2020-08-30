@@ -1,4 +1,4 @@
-# Crypto Exchange simulation (BACKEND) 
+# Crypto Exchange Simulation (BACK END) 
 (work in progress)
 
 ## Project setup
