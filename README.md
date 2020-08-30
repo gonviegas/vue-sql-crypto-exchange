@@ -1,6 +1,8 @@
 # Crypto Exchange Simulation (BACK END) 
 (in progress)
 
+## Back End Exercise using Vue.js
+
 ## Project setup
 ```
 yarn install
