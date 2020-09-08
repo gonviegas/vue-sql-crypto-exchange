@@ -1,7 +1,7 @@
 # Crypto Exchange Simulation (BACK END) 
 (in progress)
 
-## Back End Exercise using Vue.js
+## Back End Exercise using Vue.js + MySQL
 
 ## Project setup
 ```
